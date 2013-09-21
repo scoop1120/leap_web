@@ -6,7 +6,7 @@
 
     "name": "leap_web",
     "description": "Basic gesture and voice control of Chrome with Leap Motion",
-    "version": "0.0000.0001",
+    "version": "0.0.1",
 
     "permissions": [],
     "browser_action": {
