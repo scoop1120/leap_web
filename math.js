@@ -29,6 +29,7 @@ chrome.runtime.onMessage.addListener(
     	right_contrib = vectorCoordScale(request.right_pos,Right_x_min,Right_x_max,y_min,y_max);
     	//calculate total contribution with ratio 5:1
     	total_contrib = [r/(1+r)*left_contrib[0] + 1/(1+r)*right_contrib[0], r/(1+r)*left_contrib[1] + 1/(1+r)*right_contrib[1]];
+    	console.log("(" + total_contrib[0] + ", " + total_contrib[1] + ")");
     	//shift array
     	for (var i = 0; i < smooth_frames - 1; i++) {
     		data[i] = data[i+1];
@@ -43,6 +44,7 @@ chrome.runtime.onMessage.addListener(
     	};
     	var x_val = chop(x_sum/smooth_frames);
     	var y_val = chop(y_sum/smooth_frames);
+    	console.log("(" + x_val + ", " + y_val + ")");
     	sendResponse({"x": x_val, "y": y_val});
     }
   }
