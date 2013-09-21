@@ -11,11 +11,7 @@
      "persistent": true,
       "scripts": ["canvas_test.js"]
     },
-    "content_scripts": [
-	"js": [
-	    "contentscript.js",
-	    "js/page_nav.js"
-	]],
+
     "permissions": [
 	"bookmarks"
     ],
