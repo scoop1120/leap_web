@@ -54,9 +54,10 @@ Leap.loop(controllerOptions, function(frame) {
 			        	//UP SWIPE
 			        	//WHO KNOWS WAT TO MAP THIS TO
 			            console.log("up swipe");
-			            if (gesture.pointableIds.length>4){
+			            if (gesture.handIds.length>1){
 			            	console.log("magic button");
 			            	//put webspeech stuff here
+			            	chrome.tabs.reload();
 			            }else {
 				    		chrome.tabs.create({active: true});
 				    	}
@@ -92,7 +93,8 @@ Leap.loop(controllerOptions, function(frame) {
 	//		    	else {
 	//		    		//CC CIRCLE
 	//		    	} 
-			        chrome.tabs.reload();
+					//if (gesture.progress >1)
+			        	chrome.tabs.reload();
 			
 		    	    
 		    }
