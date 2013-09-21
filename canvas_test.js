@@ -1,3 +1,5 @@
+//WEB WORKERS 
+var mathWorker = new Worker("math.js");
 
 //GLOBAL VARIABLES 
 var window_width = $(window).width();
@@ -15,6 +17,7 @@ var controllerOptions = {enableGestures: true};
 
 //initial mouse
 var mouse = [0.5,0.5];
+mathWorker.postMessage({"type": "init", "x": mouse[0], "y": mouse[1]});
 var mouse_color = "#0000ff";
 
 //mouse parameters
@@ -24,10 +27,6 @@ var Left_x_min = -180;
 var Left_x_max = -30;
 var Right_x_min = 30;
 var Right_x_max = 180;
-
-
-//WEB WORKERS 
-var mathWorker = new Worker("math.js");
 
 
 $(window).resize(function(){
@@ -54,8 +53,8 @@ function vectorScale(vector, min, max, i){
   //}
 }
 
-myWorker.onmessage = function (oEvent) {
-  console.log("Called back by the worker!\n");
+mathWorker.onmessage = function (oEvent) {
+  console.log(oEvent.x + ", " + oEvent.y);
 };
 
 Leap.loop(controllerOptions, function(frame) {

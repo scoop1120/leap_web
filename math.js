@@ -1,5 +1,9 @@
-postMessage("I\'m working before postMessage(\'ali\').");
+var init_pos;
 
 onmessage = function (oEvent) {
-  postMessage("Hi " + oEvent.data);
+  if (oEvent.type == "init"){
+  	init_pos = [oEvent.x,oEvent.y];
+  	postMessage({"x": init_pos[0], "y": init_pos[1]});
+  } 
 };
+ 
