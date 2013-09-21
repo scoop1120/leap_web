@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>gestdemo</title>
+<script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+<script>
+// Store frame for motion functions
+var previousFrame = null;
+var paused = false;
+var pauseOnGesture = false;
+
+// Setup Leap loop with frame callback function
+var controllerOptions = {enableGestures: true};
+
+Leap.loop(controllerOptions, function(frame) {
+
+  var tit = document.getElementById("title");
+
+  if (frame.gestures.length>0){
+    var gesture = frame.gestures[0];
+    switch (gesture.type){
+    	case "swipe":
+    		var x = gesture.direction[0];
+    		var y = gesture.direction[1];
+    		var horiz = (abs(x)>abs(y));
+    		if (horiz and x<0)
+    			tit.innerHTML = "left"
+    		else if (horiz)
+    			tit.innerHTML = "right"
+    		else if (!horiz and y>0)
+    			tit.innerHTML = "up"
+    		else if (!horiz)
+    			tit.innerHTML = "down"
+    	}
+
+
+    }
+  }
+})
+</script>
+</head>
+
+<body>
+	<h1 id="title">NOHAND</h1>
+</body>
+</html>
