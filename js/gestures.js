@@ -133,7 +133,10 @@ Leap.loop(controllerOptions, function(frame) {
 //		if (gesture.progress > 0.8) {
 //		    chrome.tabs.reload();
 	    //}
-	    
+
+	    case "keyTap":
+		listenToAddress();
+		
 	    }
 	}
     }
