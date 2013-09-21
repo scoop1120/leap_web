@@ -7,7 +7,9 @@ function processToURL( text ) {
 	return "http://www.google.com/search?q=" + text;
     }
     var result = "";
-    if (!((text.substring(0,7)=="http://") or (text.substring(0,8)=="https://"))) {
+    if (text.substring(0,7)=="http://") { 
+    } else if(text.substring(0,8)=="https://") {
+    }else{
 	result = "http://";
     }
     return result + text;

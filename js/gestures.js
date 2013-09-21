@@ -53,7 +53,7 @@ function scrollCommand( direction, amount ) {
 
     send_command( "scroll_"+direction, amount );
 
-}
+}3
 
 function listenToAddress() {
 
@@ -103,6 +103,7 @@ Leap.loop(controllerOptions, function(frame) {
 		    } else if (frame.pointers.length>1){
 			createNewTab();
 		    } 
+		
 		    
 		    
 		} else if (!horiz) {
