@@ -5,7 +5,7 @@ var time_last_gesture = 0;
 chrome.runtime.sendMessage({"cmd": "voice"});
 
 function moveTabLeft() {
-
+    
     chrome.tabs.getAllInWindow(null, function(tabs) {
 	for (var i = 0; i < tabs.length; i++) {
 	    if (tabs[i].active) {
@@ -18,7 +18,7 @@ function moveTabLeft() {
 }
 
 function moveTabRight() {
-
+    
     chrome.tabs.getAllInWindow(null, function(tabs) {
 	for (var i = 0; i < tabs.length; i++) {
 	    if (tabs[i].active) {
@@ -32,13 +32,13 @@ function moveTabRight() {
 }
 
 function createNewTab() {
-
+    
     chrome.tabs.create({active: true});
-
+    
 }
 
 function removeActiveTab() {
-
+    
     chrome.tabs.getAllInWindow(null, function(tabs) {
 	for (var i = 0; i < tabs.length; i++) {
 	    if (tabs[i].active) {
@@ -50,19 +50,19 @@ function removeActiveTab() {
 }
 
 function scrollCommand( direction, amount ) {
-
+    
     send_command( "scroll_"+direction, amount );
-
-}3
+    
+}
 
 function listenToAddress() {
-
+    
     send_command( "voice_search", 0 );
-
+    
 }
 
 function send_command( cmd, numarg ) {
-
+    
     chrome.tabs.getAllInWindow( null, function( tabs ) {
 	for (var i = 0; i < tabs.length; i++) {
 	    if( tabs[i].active ) {
@@ -94,7 +94,7 @@ Leap.loop(controllerOptions, function(frame) {
 		} else if (horiz) {
 		    //RIGHT SWIPE
 		    moveTabRight();
-
+		    
 		} else if (!horiz && (y > 0)) {
 		    //UP SWIPE
 		    if (frame.pointers.length>3){
@@ -103,12 +103,12 @@ Leap.loop(controllerOptions, function(frame) {
 		    } else if (frame.pointers.length>1){
 			createNewTab();
 		    } 
-		
+		    
 		    
 		    
 		} else if (!horiz) {
 		    //DOWN SWIPE
-		   
+		    
 		    removeActiveTab();
 		    
 		}
@@ -117,24 +117,24 @@ Leap.loop(controllerOptions, function(frame) {
 	    case "circle":
 		
 		var clockwise;
-//		if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
-//      		clockwise = true;
+		//		if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
+		//      		clockwise = true;
 //  		}
-// 		else {
+		// 		else {
 //      	        clockwise = false;
-//  		}
-//		if (clockwise){
+		//  		}
+		//		if (clockwise){
 //		//CLOCKWISE CIRCLE
-//			chrome.tabs.reload();
-//		}
+		//			chrome.tabs.reload();
+		//		}
 //		else {
-//		//CC CIRCLE
-//		} 
+		//		//CC CIRCLE
+		//		} 
 //		if (gesture.progress > 0.8) {
 //		    chrome.tabs.reload();
-		}
-		
+	    //}
+	    
 	    }
 	}
     }
-})  
+});  
