@@ -55,6 +55,14 @@ Leap.loop(controllerOptions, function(frame) {
     //figure out if mouse is clicking
     pointer_y = (1-mouse[1])*window_height;
     pointer_x = mouse[0]*window_width;
+
+    //scroll functionality
+    //scales with closeness to edge
+    if ((1-mouse[1]) > .9)
+      scrollDown(60*(1-mouse[1]));
+
+    if (mouse[1] < .1)
+      scrollUp(60*(1-mouse[1]));
     //console.log(pointer_x+", "+pointer_y);
 
     if (right_hand.pointables.length == 1){
