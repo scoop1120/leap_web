@@ -102,7 +102,7 @@ Leap.loop(controllerOptions, function(frame) {
 		break;
 		
 	    case "circle":
-		console.log("Circle gesture");
+		
 		var clockwise;
 //		if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
 //      		clockwise = true;
