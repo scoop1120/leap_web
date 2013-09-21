@@ -17,7 +17,7 @@ chrome.runtime.sendMessage({"type": "frame_num", "n": smooth_frames});
 
 //initial mouse
 var mouse = [0.5,0.5];
-chrome.runtime.sendMessage({"type": "init", "x": mouse[0], "y": mouse[1]});
+chrome.runtime.sendMessage({"type": "init_pos", "x": mouse[0], "y": mouse[1]});
 var mouse_color = "#0000ff";
 
 
@@ -49,7 +49,7 @@ Leap.loop(controllerOptions, function(frame) {
     left_hand = frame.hands[left_num];
     right_hand = frame.hands[1-left_num];
     //send position data to math.js for processing
-    chrome.runtime.sendMessage({"type" : "hand pos", "left pos" : left_hand.palmPosition, "right pos" : right_hand.palmPosition}, 
+    chrome.runtime.sendMessage({"type" : "hand_pos", "left_pos" : left_hand.palmPosition, "right_pos" : right_hand.palmPosition}, 
       function(response) {
         mouse = [response.x, response.y];
       }
