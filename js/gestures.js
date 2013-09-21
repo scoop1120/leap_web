@@ -85,7 +85,7 @@ Leap.loop(controllerOptions, function(frame) {
 
 		} else if (!horiz && (y > 0)) {
 		    //UP SWIPE
-		    if (gesture.handIds.length>1){
+		    if (frame.hands.length>1){
 			console.log("magic button");
 			listenToAddress();			
 		    } else {
