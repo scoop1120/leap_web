@@ -1,12 +1,23 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <script src="lib/jquery-2.0.3.min.js"></script>
+    <script>
+      function post_msg(where) {
+	  alert( where );
+	  chrome.extension.sendRequest(where);
+      }
+      $(document).ready(function () {
+	  $('#upbtn').click(function () {post_msg('scroll_up');});
+      }
+    </script>
   </head>
   <body>
     <p>Leap Web is Awesome!</p>
     <script src='./js/page_nav.js'></script>
-    <button onclick="javascript:scrollUp()">up</button>
-    <button onclick="javascript:scrollDown()">down</button>
-    <button onclick="javascript:scrollLeft()">left</button>
-    <button onclick="javascript:scrollRight()">right</button>
+    <button id='upbtn'>up</button>
+    <button id='downbtn'>down</button>
+    <button id='leftbtn'>left</button>
+    <button id='rightbtn'>right</button>
   </body>
 </html>
