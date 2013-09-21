@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Let's Build something</title>
+<script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+<script>
+// Store frame for motion functions
+var previousFrame = null;
+var paused = false;
+var pauseOnGesture = false;
+
+// Setup Leap loop with frame callback function
+var controllerOptions = {enableGestures: true};
+
+Leap.loop(controllerOptions, function(frame) {
+
+  var tit = document.getElementById("title");
+
+  if (frame.hands.length == 1){
+  	tit.innerHTML= "HAND";
+  } else if (frame.hands.length > 1) {
+  	tit.innerHTML = "TWOHAND";
+  } else {
+  	tit.innerHTML = "NOHAND"
+  }
+
+  var fingerSum = 0;
+  for (var i = 0; i < frame.hands.length; i++) {
+  	fingerSum+=frame.hands[i].pointables.length;
+  };
+  if (fingerSum % 2 == 1){
+  	tit.style.color = "blue";
+  } else {
+  	tit.style.color = "black";
+  }
+})
+</script>
+</head>
+
+<body>
+	<h1 id="title">NOHAND</h1>
+</body>
+</html>
