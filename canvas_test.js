@@ -82,6 +82,12 @@ Leap.loop(controllerOptions, function(frame) {
 })
 
 
+  function rect(x,y,w,h) {
+    ctx.beginPath();
+    ctx.rect(x,y,w,h);
+    ctx.closePath();
+    ctx.fill();
+  }
 
 
 function circle(x,y,r) {
