@@ -10,16 +10,18 @@
     "content_scripts": [
 	{
 	    "matches": ["<all_urls>"],
-	    "js": ["canvas_test.js",
+	    "js": ["lib/jquery-2.0.3.min.js",
+       "lib/leap.min.js",
+        "canvas_test.js",
 		   "js/webSpeech.js",
 		 //  "background.js",
-		   "js/page_nav.js",
-		    "contentscript.js"//,
-		  // "lib/leap.min.js",
+		   //"js/page_nav.js",
+		    "contentscript.js"
 		  // "js/gestures.js"
 		  ]
 	}
     ],
+    
     "background": {
 	"scripts": ["lib/leap.min.js",
 //		    "js/webSpeech.js",

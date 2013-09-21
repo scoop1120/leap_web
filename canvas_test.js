@@ -6,10 +6,97 @@ var pointer_diameter = 15;
 var pointer_x = 5;
 var pointer_y = 50;
 
+var previousFrame = null;
+var paused = false;
+var pauseOnGesture = false;
+
+// Setup Leap loop with frame callback function
+var controllerOptions = {enableGestures: true};
+
+//initial mouse
+var mouse = [0.5,0.5];
+
+//mouse parameters
+var y_min = 75;
+var y_max = 240;
+var Left_x_min = -180;
+var Left_x_max = -30;
+var Right_x_min = 30;
+var Right_x_max = 180;
+
+
+
 $(window).resize(function(){
   window_width = $(window).width();
   window_height = $(window).height();
 });
+
+
+function vectorCoordScale(vector, x_min, x_max, y_min, y_max){
+  return [vectorScale(vector,x_min,x_max,0),vectorScale(vector,y_min,y_max,1)];
+}
+function vectorScale(vector, min, max, i){
+  //Requires: min < max, i < vector.length
+  //Effects: scales ith value of vector to range
+  //of 0 to 1.
+  /*
+  if (vector[i] < min){
+    return 0;
+  } else if (vector[i] > max){
+    return 1;
+  } else {
+    */
+    return (vector[i]-min)/(max-min);
+  //}
+}
+
+Leap.loop(controllerOptions, function(frame) {
+
+  var tit = document.getElementById("title");
+  var mouse_out = document.getElementById("mouse");
+  var left_out = document.getElementById("left");
+  var right_out = document.getElementById("right");
+
+  var only_hand;
+  var left_hand;
+  var right_hand;
+  //Output number of hands and assign hand vars
+  if (frame.hands.length == 0){
+    tit.innerHTML= "No Hands";
+    mouse_color = "#000000"; //black
+  } else if (frame.hands.length == 1) {
+    tit.innerHTML = "One Hand";
+    only_hand = frame.hands[0];
+    mouse_color = "#0000ff"; //blue
+  } else if (frame.hands.length == 2) {
+    mouse_color = "#ff0000"; //red
+    tit.innerHTML = "Two Hands";
+    if (frame.hands[0].palmPosition[0] < frame.hands[1].palmPosition[0]) {
+      var left_num = 0;
+    } else {
+      var left_num = 1;
+    }
+    left_hand = frame.hands[left_num];
+    right_hand = frame.hands[1-left_num];
+    //calculate relative hand positions
+    left_contrib = vectorCoordScale(left_hand.palmPosition,Left_x_min,Left_x_max,y_min,y_max);
+    right_contrib = vectorCoordScale(right_hand.palmPosition,Right_x_min,Right_x_max,y_min,y_max);
+    //calculate total contribution with ratio 5:1
+    total_contrib = [10.0/12.0*left_contrib[0]+2.0/12.0*right_contrib[0],10.0/12.0*left_contrib[1]+2.0/12.0*right_contrib[1]];
+    //use total_contrib to change mouse position
+    mouse = total_contrib;
+    //figure out if mouse is clicking
+    if (right_hand.pointables.length == 1){
+      mouse_color = "#00ff00"; //green
+      sim_click(mouse[0]*window_width, (1-mouse[1])*window_height);
+    }
+
+  } else {
+    tit.innerHTML = "?????????";
+  }
+})
+
+
 
 
 function circle(x,y,r) {
@@ -18,11 +105,9 @@ function circle(x,y,r) {
     ctx.fill();
 }
 
-
 function clear() {
   ctx.clearRect(0, 0, window_width, window_height);
 }
-
 
 function init() {
   canvas = document.getElementById("canvas");
@@ -85,17 +170,17 @@ function sim_click(x, y){
 }
 
 
-$(document).mousemove(function( event ) {
-  pointer_x = event.pageX;
-  pointer_y = event.pageY;
-});
+// $(document).mousemove(function( event ) {
+//   pointer_x = event.pageX;
+//   pointer_y = event.pageY;
+// });
 
-$(document).keyup(onKeyDown);
+// $(document).keyup(onKeyDown);
 
-function onKeyDown(evt) {
-  console.log("keydown");
-  sim_click(pointer_x, pointer_y);
-}
+// function onKeyDown(evt) {
+//   console.log("keydown");
+//   sim_click(pointer_x, pointer_y);
+// }
 
 $(document).ready( function(){
 
