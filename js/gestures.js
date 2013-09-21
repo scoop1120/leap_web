@@ -25,9 +25,11 @@ Leap.loop(controllerOptions, function(frame) {
 				    chrome.tabs.getAllInWindow(null, function(tabs) {
 					for (var i = 0; i < tabs.length; i++) {
 					    if (tabs[i].active) {
-						if (i > 0) {
-						    chrome.tabs.update(tabs[i-1].id, {active: true});
-						}
+							if (i > 0) {
+							    chrome.tabs.update(tabs[i-1].id, {active: true});
+							} else {
+								chrome.tabs.update(tabs[tabs.length-1].id, {active: true});
+							}
 					    }
 					}
 				    });
@@ -39,9 +41,11 @@ Leap.loop(controllerOptions, function(frame) {
 				    chrome.tabs.getAllInWindow(null, function(tabs) {
 					for (var i = 0; i < tabs.length; i++) {
 					    if (tabs[i].active) {
-						if (i < tabs.length-1) {
-						    chrome.tabs.update(tabs[i+1].id, {active: true});
-						}
+							if (i < tabs.length-1) {
+							    chrome.tabs.update(tabs[i+1].id, {active: true});
+							} else{
+								chrome.tabs.update(tabs[0].id,{active: true});
+							}
 					    }
 					}
 
@@ -50,7 +54,12 @@ Leap.loop(controllerOptions, function(frame) {
 			        	//UP SWIPE
 			        	//WHO KNOWS WAT TO MAP THIS TO
 			            console.log("up swipe");
-				    chrome.tabs.create({active: true});
+			            if (gesture.pointableIds.length>4){
+			            	console.log("magic button");
+			            	//put webspeech stuff here
+			            }else {
+				    		chrome.tabs.create({active: true});
+				    	}
 				    
 			        } else if (!horiz) {
 			        	//DOWN SWIPE
