@@ -88,7 +88,7 @@ Leap.loop(controllerOptions, function(frame) {
 		    if (gesture.handIds.length>1){
 			console.log("magic button");
 			listenToAddress();			
-		    }else {
+		    } else {
 			createNewTab();
 		    }
 		    
