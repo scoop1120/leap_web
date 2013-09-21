@@ -10,7 +10,7 @@ var Left_x_max = -30;
 var Right_x_min = 30;
 var Right_x_max = 180;
 //initialize data
-var data = new array();
+var data = new Array();
 
 
 
@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener(
   	//get the initial position and fill the data array 
     if (request.type == "init_pos"){
     	for (var i = 0; i < smooth_frames; i++) {
-    		data[i] = new array();
+    		data[i] = new Array();
     		data[i][0] = request.x;
     		data[i][1] = request.y;
     	};
