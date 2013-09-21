@@ -4,6 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Let's Build something</title>
 <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+
+</head>
+
+<body>
+  <canvas id="canvas" width="1500" height="1000"></canvas>
+	<h1 id="title">Default</h1>
+	<h1>LEFT</h1>
+	<h1 id="left"></h1>
+	<h1>RIGHT</h1>
+	<h1 id="right"></h1>
+	<h1>MOUSE</h1>
+	<h1 id="mouse"></h1>
+
 <script>
 // Store frame for motion functions
 var previousFrame = null;
@@ -17,12 +30,74 @@ var controllerOptions = {enableGestures: true};
 var mouse = [0.5,0.5];
 
 //mouse parameters
+var WIDTH = 1500;
+var HEIGHT = 1000;
 var y_min = 75;
 var y_max = 240;
 var Left_x_min = -180;
 var Left_x_max = -30;
 var Right_x_min = 30;
 var Right_x_max = 180;
+
+//mouse stuff
+var canvas;
+var ctx;
+var intervalID;
+var left_contrib;
+var right_contrib;
+var total_contrib;
+var mouse_color;
+
+function clear() {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function init() {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+    return setInterval(draw, 50);
+}
+
+function draw(x,y,color) {
+    clear();
+    circle(WIDTH*x, HEIGHT*(1-y), 15, color);    
+}
+
+function circle(x,y,r,color) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI*2, true);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function vectorCoordScale(vector, x_min, x_max, y_min, y_max){
+  return [vectorScale(vector,x_min,x_max,0),vectorScale(vector,y_min,y_max,1)];
+}
+function vectorScale(vector, min, max, i){
+  //Requires: min < max, i < vector.length
+  //Effects: scales ith value of vector to range
+  //of 0 to 1.
+  /*
+  if (vector[i] < min){
+    return 0;
+  } else if (vector[i] > max){
+    return 1;
+  } else {
+    */
+    return (vector[i]-min)/(max-min);
+  //}
+}
+function vectorPrint(vector){
+  out_string = "(";
+  for (var i = 0; i < vector.length; i++){
+    out_string += vector[i] + ", ";
+  }
+  out_string = out_string.substring(0,out_string.length-2);
+  out_string += ")";
+  return out_string;
+}
+
+var intervalID = init();
 
 Leap.loop(controllerOptions, function(frame) {
 
@@ -36,12 +111,15 @@ Leap.loop(controllerOptions, function(frame) {
   var right_hand;
   //Output number of hands and assign hand vars
   if (frame.hands.length == 0){
-  	tit.innerHTML= "No Hands";
+    tit.innerHTML= "No Hands";
+    mouse_color = "#000000"; //black
   } else if (frame.hands.length == 1) {
-  	tit.innerHTML = "One Hand";
+    tit.innerHTML = "One Hand";
     only_hand = frame.hands[0];
+    mouse_color = "#0000ff"; //blue
   } else if (frame.hands.length == 2) {
-  	tit.innerHTML = "Two Hands";
+    mouse_color = "#ff0000"; //red
+    tit.innerHTML = "Two Hands";
     if (frame.hands[0].palmPosition[0] < frame.hands[1].palmPosition[0]) {
       var left_num = 0;
     } else {
@@ -50,12 +128,16 @@ Leap.loop(controllerOptions, function(frame) {
     left_hand = frame.hands[left_num];
     right_hand = frame.hands[1-left_num];
     //calculate relative hand positions
-    var left_contrib = vectorCoordScale(left_hand.palmPosition,Left_x_min,Left_x_max,y_min,y_max);
-    var right_contrib = vectorCoordScale(right_hand.palmPosition,Right_x_min,Right_x_max,y_min,y_max);
-    //calculate total contribution with ratio 11:1
-    var total_contrib = [11.0/12.0*left_contrib[0]+1.0/12.0*right_contrib[0],11.0/12.0*left_contrib[1]+1.0/12.0*right_contrib[1]];
+    left_contrib = vectorCoordScale(left_hand.palmPosition,Left_x_min,Left_x_max,y_min,y_max);
+    right_contrib = vectorCoordScale(right_hand.palmPosition,Right_x_min,Right_x_max,y_min,y_max);
+    //calculate total contribution with ratio 5:1
+    total_contrib = [10.0/12.0*left_contrib[0]+2.0/12.0*right_contrib[0],10.0/12.0*left_contrib[1]+2.0/12.0*right_contrib[1]];
     //use total_contrib to change mouse position
     mouse = total_contrib;
+    //figure out if mouse is clicking
+    if (right_hand.pointables.length == 1){
+      mouse_color = "#00ff00"; //green
+    }
 
   } else {
     tit.innerHTML = "?????????";
@@ -63,43 +145,12 @@ Leap.loop(controllerOptions, function(frame) {
   mouse_out.innerHTML = vectorPrint(mouse);
   left_out.innerHTML = vectorPrint(left_contrib);
   right_out.innerHTML = vectorPrint(right_contrib);
-
+  draw(mouse[0],mouse[1],mouse_color);
 })
-function vectorCoordScale(vector, x_min, x_max, y_min, y_max){
-	return [vectorScale(vector,x_min,x_max,0),vectorScale(vector,y_min,y_max,1)];
-}
-function vectorScale(vector, min, max, i){
-	//Requires: min < max, i < vector.length
-	//Effects: scales ith value of vector to range
-	//of 0 to 1.
-	if (vector[i] < min){
-		return 0;
-	} else if (vector[i] > max){
-		return 1;
-	} else {
-		return (vector[i]-min)/(max-min);
-	}
-}
-function vectorPrint(vector){
-	out_string = "(";
-	for (var i = 0; i < vector.length; i++){
-		out_string += vector[i] + ", ";
-	}
-	out_string = out_string.substring(0,out_string.length-2);
-	out_string += ")";
-	return out_string;
-}
+
+
 
 </script>
-</head>
 
-<body>
-	<h1 id="title">Default</h1>
-	<h1>LEFT</h1>
-	<h1 id="left"></h1>
-	<h1>RIGHT</h1>
-	<h1 id="right"></h1>
-	<h1>MOUSE</h1>
-	<h1 id="mouse"></h1>
 </body>
 </html>
