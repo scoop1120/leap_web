@@ -52,7 +52,7 @@ function removeActiveTab() {
 function scrollCommand( direction, amount ) {
     
     send_command( "scroll_"+direction, amount );
-    
+
 }
 
 function listenToAddress() {
