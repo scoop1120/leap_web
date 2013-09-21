@@ -49,12 +49,24 @@ function removeActiveTab() {
     });
 }
 
+function scrollCommand( direction, amount ) {
+
+    send_command( "scroll_"+direction, amount );
+
+}
+
 function listenToAddress() {
+
+    send_command( "voice_search", 0 );
+
+}
+
+function send_command( cmd, numarg ) {
 
     chrome.tabs.getAllInWindow( null, function( tabs ) {
 	for (var i = 0; i < tabs.length; i++) {
 	    if( tabs[i].active ) {
-		chrome.tabs.sendMessage( tabs[i].id, {msg: "voice_search"} );
+		chrome.tabs.sendMessage( tabs[i].id, {msg: cmd, numarg: numarg} );
 	    }
 	}
     });
