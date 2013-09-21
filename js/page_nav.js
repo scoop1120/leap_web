@@ -4,7 +4,6 @@
 function scrollDown(amount) {
 
     window.scrollBy(0,50);
-    alert( 'Down' );
 
 }
 

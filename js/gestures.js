@@ -18,18 +18,39 @@ Leap.loop(controllerOptions, function(frame) {
 		          	//LEFT SWIPE
 		      		//TAB NAV
 			    console.log("left swipe");
+			  
+			    chrome.tabs.getAllInWindow(null, function(tabs) {
+				for (var i = 0; i < tabs.length; i++) {
+				    if (tabs[i].active) {
+					if (i > 0) {
+					    chrome.tabs.update(tabs[i-1].id, {active: true});
+					}
+				    }
+				}
+			    });
 
 		        } else if (horiz) {
 		        	//RIGHT SWIPE
 		        	//TAB NAV
 			    console.log("right swipe");
+			    chrome.tabs.getAllInWindow(null, function(tabs) {
+				for (var i = 0; i < tabs.length; i++) {
+				    if (tabs[i].active) {
+					if (i < tabs.length-1) {
+					    chrome.tabs.update(tabs[i+1].id, {active: true});
+					}
+				    }
+				}
+			    });
 		        } else if (!horiz && (y > 0)) {
 		        	//UP SWIPE
 		        	//WHO KNOWS WAT TO MAP THIS TO
 		            console.log("up swipe");
+			    scrollUp();
 		        } else if (!horiz) {
 		        	//DOWN SWIPE
 			    console.log("down swipe");
+			    scrollDown();
 			}
 		        break;
 
@@ -49,7 +70,8 @@ Leap.loop(controllerOptions, function(frame) {
 //		    		//CC CIRCLE
 //		    	} 
 		        chrome.tabs.reload();
+		
 	    	    
-    }
-  }
+	    }
+	}
 })  

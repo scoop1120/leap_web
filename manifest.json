@@ -13,8 +13,8 @@
 	    "js": ["canvas_test.js",
 		   "contentscript.js",
 		   "js/page_nav.js"//,
-		//   "lib/leap.min.js",
-		//   "js/gestures.js"
+		  // "lib/leap.min.js",
+		  // "js/gestures.js"
 		  ]
 	}
     ],
