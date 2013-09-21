@@ -10,7 +10,7 @@
     "content_scripts": [
 	{
 	    "matches": ["<all_urls>"],
-	    "js": ["lib/jquery-2.0.3.min.js",
+	    "js": ["lib/jquery-2.0.3.js",
        "lib/leap.min.js",
         "canvas_test.js",
 		   "js/webSpeech.js",
@@ -21,13 +21,13 @@
 		  ]
 	}
     ],
-    
+    "web_accessible_resources": ["lib/jquery-2.0.3.js"],
     "background": {
 	"scripts": ["lib/leap.min.js",
 //		    "js/webSpeech.js",
-		    "background.js",
-		    "js/gestures.js"],
-	"persistent": false
+		    "js/gestures.js",
+		    "background.js"],
+	"persistent": true
     },
     "permissions": ["tabs"],
     "browser_action": {
