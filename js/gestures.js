@@ -117,8 +117,8 @@ Leap.loop(controllerOptions, function(frame) {
 //		else {
 //		//CC CIRCLE
 //		} 
-		if (gesture.progress > 0.8) {
-		    chrome.tabs.reload();
+//		if (gesture.progress > 0.8) {
+//		    chrome.tabs.reload();
 		}
 		
 	    }
