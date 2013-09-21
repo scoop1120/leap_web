@@ -53,7 +53,7 @@ function scrollCommand( direction, amount ) {
 
     send_command( "scroll_"+direction, amount );
 
-}3
+}
 
 function listenToAddress() {
 
