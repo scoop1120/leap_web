@@ -21,7 +21,7 @@
 		  ]
 	}
     ],
-    "web_accessible_resources": ["lib/jquery-2.0.3.js"],
+    "web_accessible_resources": ["lib/jquery-2.0.3.js","math.js"],
     "background": {
 	"scripts": ["lib/leap.min.js",
 //		    "js/webSpeech.js",
