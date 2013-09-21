@@ -95,8 +95,9 @@ Leap.loop(controllerOptions, function(frame) {
 		    
 		} else if (!horiz) {
 		    //DOWN SWIPE
+		   
 		    removeActiveTab();
-		    		    
+		    
 		}
 		break;
 		
