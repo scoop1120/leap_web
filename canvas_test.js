@@ -1,6 +1,3 @@
-//WEB WORKERS 
-var mathWorker = new Worker("math.js");
-
 //GLOBAL VARIABLES 
 var window_width = $(window).width();
 var window_height = $(window).height();
@@ -14,48 +11,21 @@ var pauseOnGesture = false;
 
 // Setup Leap loop with frame callback function
 var controllerOptions = {enableGestures: true};
+//set number of smoothing frames
+var smooth_frames = 20;
+chrome.runtime.sendMessage({"type": "frame_num", "n": smooth_frames});
 
 //initial mouse
 var mouse = [0.5,0.5];
-mathWorker.postMessage({"type": "init", "x": mouse[0], "y": mouse[1]});
+chrome.runtime.sendMessage({"type": "init", "x": mouse[0], "y": mouse[1]});
 var mouse_color = "#0000ff";
 
-//mouse parameters
-var y_min = 75;
-var y_max = 240;
-var Left_x_min = -180;
-var Left_x_max = -30;
-var Right_x_min = 30;
-var Right_x_max = 180;
 
 
 $(window).resize(function(){
   window_width = $(window).width();
   window_height = $(window).height();
 });
-
-
-function vectorCoordScale(vector, x_min, x_max, y_min, y_max){
-  return [vectorScale(vector,x_min,x_max,0),vectorScale(vector,y_min,y_max,1)];
-}
-function vectorScale(vector, min, max, i){
-  //Requires: min < max, i < vector.length
-  //Effects: scales ith value of vector to range
-  //of 0 to 1.
-  /*
-  if (vector[i] < min){
-    return 0;
-  } else if (vector[i] > max){
-    return 1;
-  } else {
-    */
-    return (vector[i]-min)/(max-min);
-  //}
-}
-
-mathWorker.onmessage = function (oEvent) {
-  console.log(oEvent.x + ", " + oEvent.y);
-};
 
 Leap.loop(controllerOptions, function(frame) {
 
@@ -78,13 +48,13 @@ Leap.loop(controllerOptions, function(frame) {
     }
     left_hand = frame.hands[left_num];
     right_hand = frame.hands[1-left_num];
-    //calculate relative hand positions
-    left_contrib = vectorCoordScale(left_hand.palmPosition,Left_x_min,Left_x_max,y_min,y_max);
-    right_contrib = vectorCoordScale(right_hand.palmPosition,Right_x_min,Right_x_max,y_min,y_max);
-    //calculate total contribution with ratio 5:1
-    total_contrib = [10.0/12.0*left_contrib[0]+2.0/12.0*right_contrib[0],10.0/12.0*left_contrib[1]+2.0/12.0*right_contrib[1]];
-    //use total_contrib to change mouse position
-    mouse = total_contrib;
+    //send position data to math.js for processing
+    chrome.runtime.sendMessage({"type" : "hand pos", "left pos" : left_hand.palmPosition, "right pos" : right_hand.palmPosition}, 
+      function(response) {
+        mouse = [response.x, response.y];
+      }
+    );
+
     //figure out if mouse is clicking
     pointer_y = (1-mouse[1])*window_height;
     pointer_x = mouse[0]*window_width;
@@ -96,7 +66,6 @@ Leap.loop(controllerOptions, function(frame) {
     }
 
   } else {
-    tit.innerHTML = "?????????";
   }
 })
 
