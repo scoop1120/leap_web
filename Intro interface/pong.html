@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<htmL> 
+<head>
+  <!-- // <script src="static/js/leap.min.js"></script> -->
+  <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
+
+</head>
+<body>
+  <canvas id="canvas" width="1100" height="500"></canvas> 
+
+<script>
+
+  var LeftPaddleY;
+  var RightPaddleY;
+
+  /* LIBRARY CODE */
+  var canvas;  
+  var ctx;
+  var x = 20;
+  var y = 20;
+  var dx = 1.5;
+  var dy = 1.6;
+  var WIDTH = 1100;
+  var HEIGHT = 500; 
+  var intervalID;
+
+  function circle(x,y,r) {
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI*2, true);
+    ctx.fill();
+  }
+
+  function rect(x,y,w,h) {
+    ctx.beginPath();
+    ctx.rect(x,y,w,h);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function clear() {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  }
+
+  function init() {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+    return setInterval(draw, 10);
+  }
+
+  /**************END LIBRARY CODE */
+
+  /******** PADDLES  ****/
+  
+  var LeftPaddleW;
+  var LeftPaddleH;
+  var LeftPaddleDY = 1;
+
+  
+  var RightPaddleW;
+  var RightPaddleH;
+  var RightPaddleDY = 1;
+
+  function init_paddles() {
+    LeftPaddleY = HEIGHT/2;
+    LeftPaddleH = 100;
+    LeftPaddleW = 15;
+
+    RightPaddleY = HEIGHT/2;
+    RightPaddleH = 100;
+    RightPaddleW = 15;
+  }
+
+  function draw_paddles(){
+      //left paddle
+    ctx.fillStyle ="#ffcb05";
+    rect(0, LeftPaddleY, LeftPaddleW, LeftPaddleH);
+      //right paddle
+    ctx.fillStyle="#00274c";
+    rect((WIDTH - RightPaddleW) , RightPaddleY, RightPaddleW, RightPaddleH);
+  }
+
+  var controllerOptions = { enableGestures: true };
+
+
+  /******** END PADDLES ******/
+
+  
+  // END MOVEMENT 
+
+  // GAME FUNCTIONS //
+  var leftScore = 0;
+  var rightScore = 0;
+
+
+
+  function drawScoreboard(x, y){
+    ctx.font = "20px Arial";
+    ctx.fillStyle ="#ffcb05";
+    ctx.fillText("Maize: "+leftScore, WIDTH/3, 20);
+    ctx.fillStyle="#00274c";
+    ctx.fillText("Blue: "+rightScore, WIDTH/3 *2, 20);
+  }
+
+  function endGame(){
+    rect(0,0, WIDTH, HEIGHT);
+    ctx.fillStyle = "#000000";
+    ctx.font = "50px Arial";
+    ctx.fillText("GAME OVER", WIDTH/2 - 100, HEIGHT/2 - 5);
+
+  }
+
+  function draw() {
+    clear();
+    ctx.fillStyle = "#ff3d00";
+    rect(0,0, WIDTH, HEIGHT);
+    drawScoreboard(leftScore,rightScore);
+    draw_paddles();
+    ctx.fillStyle = "#444444";
+    circle(x, y, 10);
+
+    if (x + dx > (WIDTH-LeftPaddleW) || x + dx < LeftPaddleW){
+      if( ( y < LeftPaddleY+LeftPaddleH && y > LeftPaddleY) && x < WIDTH/2){
+        dx = -(1.1)*dx;
+        dy = (1)*LeftPaddleDY;
+      } 
+      else if( ( y < RightPaddleY + RightPaddleH) && (y > RightPaddleY) && x > WIDTH/2 ){
+        dx = -(1.1)*dx;
+        dy = (1)*RightPaddleDY;
+      }
+      else {
+      setTimeout(function(){
+        if(x > WIDTH-RightPaddleW){
+          leftScore += 1;
+          // checkEnd();
+        }
+        if(x < RightPaddleW){
+          rightScore += 1;
+          // checkEnd();
+        }
+        x = 20;
+        y = 20;
+        dx = 1.5;
+        dy = 1.6;
+      }, 200);
+      //endGame();
+      //clearInterval(intervalID);
+    }
+
+    }
+    if (y + dy > HEIGHT || y + dy < 0)
+      dy = -dy;
+
+    x += dx;
+    y += dy;
+  }
+
+
+  // *** END MOVEMENT    ***
+
+  var intervalID = init();
+  init_paddles();
+
+
+
+  Leap.loop(controllerOptions, function(frame) {
+    after = {};
+    draw();
+    if (frame.hands.length > 0) {
+      var handLeft = frame.hands[0];
+      var handRight = frame.hands[1];
+
+      LeftPaddleY = HEIGHT - handLeft.palmPosition[1];
+      RightPaddleY = HEIGHT - handRight.palmPosition[1];
+
+    }
+    
+    // done();
+});
+
+
+</script>
+</body>
+</htmL>
+
