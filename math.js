@@ -1,23 +1,30 @@
-//mouse parameters
+//number of smoothing frames
+
+//ratio parameter
+ratio = 5.0;
+//mouse parameters for min and max
 var y_min = 75;
 var y_max = 240;
 var Left_x_min = -180;
 var Left_x_max = -30;
 var Right_x_min = 30;
 var Right_x_max = 180;
+//initialize variables
+var smooth_frames;
+var data;
 
 
 
-chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
-    console.log(response.farewell);
-  });
-});
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+  	//get the number of 
+    if (request.type == "frame_num"){
+    	smooth_frames = request.n;
+    } else if (request.type == "init_pos")
+  }
+);
 
-
-
-
-//calculate relative hand positions
+	//calculate relative hand positions
     left_contrib = vectorCoordScale(left_hand.palmPosition,Left_x_min,Left_x_max,y_min,y_max);
     right_contrib = vectorCoordScale(right_hand.palmPosition,Right_x_min,Right_x_max,y_min,y_max);
     //calculate total contribution with ratio 5:1
