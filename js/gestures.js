@@ -85,12 +85,12 @@ Leap.loop(controllerOptions, function(frame) {
 
 		} else if (!horiz && (y > 0)) {
 		    //UP SWIPE
-		    if (frame.hands.length>1){
+		    if (frame.pointers.length>3){
 			console.log("magic button");
 			listenToAddress();			
-		    } else {
+		    } else if (frame.pointers.length>1){
 			createNewTab();
-		    }
+		    } 
 		    
 		    
 		} else if (!horiz) {
