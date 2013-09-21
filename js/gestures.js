@@ -6,7 +6,7 @@ Leap.loop(controllerOptions, function(frame) {
 
 	//if there is a gesture 
 	if ((frame.gestures.length > 0)){
-		if ((frame.timestamp - time_last_gesture) > 1000000){
+		if ((frame.timestamp - time_last_gesture) > 500000){
 			time_last_gesture = frame.timestamp;
 
 		    var gesture = frame.gestures[0];
@@ -50,15 +50,7 @@ Leap.loop(controllerOptions, function(frame) {
 			        	//UP SWIPE
 			        	//WHO KNOWS WAT TO MAP THIS TO
 			            console.log("up swipe");
-				    chrome.tabs.getAllInWindow(null, function(tabs) {
-					for (var i = 0; i < tabs.length; i++) {
-					    if (tabs[i].active) {
-						
-						chrome.windows.create( {url: tabs[i].url} );
-						
-					    }
-					}
-				    });
+				    chrome.tabs.create({active: true});
 				    
 			        } else if (!horiz) {
 			        	//DOWN SWIPE
