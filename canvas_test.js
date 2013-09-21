@@ -11,9 +11,6 @@ var pauseOnGesture = false;
 
 // Setup Leap loop with frame callback function
 var controllerOptions = {enableGestures: true};
-//set number of smoothing frames
-var smooth_frames = 20;
-chrome.runtime.sendMessage({"type": "frame_num", "n": smooth_frames});
 
 //initial mouse
 var mouse = [0.5,0.5];
