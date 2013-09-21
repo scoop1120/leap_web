@@ -14,37 +14,41 @@ Leap.loop(controllerOptions, function(frame) {
 		        var y = gesture.direction[1];
 
 		        var horiz = (Math.abs(x) > Math.abs(y));
-		        if ((horiz) && (x < 0))
+		        if ((horiz) && (x < 0)) {
 		          	//LEFT SWIPE
 		      		//TAB NAV
+			    console.log("left swipe");
 
-		        else if (horiz)
+		        } else if (horiz) {
 		        	//RIGHT SWIPE
 		        	//TAB NAV
-
-		        else if (!horiz && (y > 0))
+			    console.log("right swipe");
+		        } else if (!horiz && (y > 0)) {
 		        	//UP SWIPE
 		        	//WHO KNOWS WAT TO MAP THIS TO
-		        
-		        else if (!horiz)
+		            console.log("up swipe");
+		        } else if (!horiz) {
 		        	//DOWN SWIPE
+			    console.log("down swipe");
+			}
 		        break;
 
 		    case "circle":
 		    	var clockwise;
-   				if (circle.pointable.direction.angleTo(circle.normal) <= PI/4) {
-       				clockwiseness = true;
-   				}
-   				else {
-       				clockwiseness = false;
-   				}
-		    	if (clockwiseness){
-		    		//CLOCKWISE CIRCLE
-		    		//RELOAD
-		    	}
-		    	else {
-		    		//CC CIRCLE
-		    	}    
+ // 				if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
+ //      				clockwise = true;
+ //  				}
+ // 				else {
+ //      				clockwise = false;
+ //  				}
+//		    	if (clockwise){
+//		    		//CLOCKWISE CIRCLE
+//		    		chrome.tabs.reload();
+//		    	}
+//		    	else {
+//		    		//CC CIRCLE
+//		    	} 
+		        chrome.tabs.reload();
 	    	    
     }
   }

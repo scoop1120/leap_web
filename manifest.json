@@ -12,16 +12,20 @@
 	    "matches": ["<all_urls>"],
 	    "js": ["canvas_test.js",
 		   "contentscript.js",
-		   "js/page_nav.js"]
+		   "js/page_nav.js",
+		   "lib/leap.min.js",
+		   "js/gestures.js"
+		  ]
 	}
     ],
     "background": {
-	"scripts": [
-	    "lib/leap.min.js"
-	]},
-    "permissions": [],
+	"scripts": ["lib/leap.min.js",
+		    "js/gestures.js"],
+	"persistent": true
+    },
+    "permissions": ["tabs"],
     "browser_action": {
-	"default_icon": "icon.png",
-	"default_popup": "default_pop.html"
+	"default_icon": "icon.png"//,
+//	"default_popup": "default_pop.html"
     }
 }
