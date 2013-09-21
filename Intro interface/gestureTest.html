@@ -18,6 +18,7 @@ Leap.loop(controllerOptions, function(frame) {
   var tit = document.getElementById("title");
 
   if (frame.gestures.length>0){
+    tit.style.color = "blue";
     var gesture = frame.gestures[0];
     switch (gesture.type){
     	case "swipe":

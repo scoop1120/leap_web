@@ -16,29 +16,81 @@ var controllerOptions = {enableGestures: true};
 Leap.loop(controllerOptions, function(frame) {
 
   var tit = document.getElementById("title");
+  var pos1 = document.getElementById("pos 1");
+  var pos2 = document.getElementById("pos 2");
+  var frame_out = document.getElementById("Frame");
+  var gest = document.getElementById("gesture");
 
-  if (frame.hands.length == 1){
-  	tit.innerHTML= "HAND";
-  } else if (frame.hands.length > 1) {
-  	tit.innerHTML = "TWOHAND";
+  frame_out.innerHTML = frame.id;
+
+  var only_hand;
+  var left_hand;
+  var right_hand;
+  //Output number of hands and assign hand vars
+  if (frame.hands.length == 0){
+  	tit.innerHTML= "No Hands";
+    pos1.innerHTML = "";
+    pos2.innerHTML = "";
+  } else if (frame.hands.length == 1) {
+  	tit.innerHTML = "One Hand";
+    only_hand = frame.hands[0];
+    pos1.innerHTML = vectorToString(only_hand.palmPosition);
+    pos2.innerHTML = "";
+  } else if (frame.hands.length == 2) {
+  	tit.innerHTML = "Two Hands";
+    if (frame.hands[0].palmPosition[0] < frame.hands[1].palmPosition[0]) {
+      var left_num = 0;
+    } else {
+      var left_num = 1;
+    }
+    left_hand = frame.hands[left_num];
+    right_hand = frame.hands[1-left_num];
+    pos1.innerHTML = vectorToString(left_hand.palmPosition);
+    pos2.innerHTML = vectorToString(right_hand.palmPosition);
   } else {
-  	tit.innerHTML = "NOHAND"
+    tit.innerHTML = "?????????";
+    pos1.innerHTML = "?";
+    pos2.innerHTML = "?";
   }
-
-  var fingerSum = 0;
-  for (var i = 0; i < frame.hands.length; i++) {
-  	fingerSum+=frame.hands[i].pointables.length;
-  };
-  if (fingerSum % 2 == 1){
-  	tit.style.color = "blue";
-  } else {
-  	tit.style.color = "black";
+  if (frame.gestures.length > 0){
+    gest.innerHTML = "Gesture";
+    var gesture = frame.gestures[0];
+    switch (gesture.type){
+      case "swipe":
+        var x = gesture.direction[0];
+        var y = gesture.direction[1];
+        var horiz = (Math.abs(x) > Math.abs(y));
+        if ((horiz) && (x < 0))
+          tit.innerHTML = "left";
+        else if (horiz)
+          tit.innerHTML = "right";
+        else if (!horiz && y>0)
+          tit.innerHTML = "up";
+        else if (!horiz)
+          tit.innerHTML = "down";
+    }
   }
 })
+
+function vectorToString(vector, digits) {
+  if (typeof digits === "undefined") {
+    digits = 1;
+  }
+  return "(" + vector[0].toFixed(digits) + ", "
+             + vector[1].toFixed(digits) + ", "
+             + vector[2].toFixed(digits) + ")";
+}
+
 </script>
 </head>
 
 <body>
-	<h1 id="title">NOHAND</h1>
+	<h1 id="title">Default</h1>
+  <h1 id="hand 1">Left/Only Hand:</h1>
+  <h1 id="pos 1">Default</h1>
+  <h1 id="hand 2">Right Hand:</h1>
+  <h1 id="pos 2">Default</h1>
+  <h1 id="Frame"></h1>
+  <h1 id="gesture">G</h1>
 </body>
 </html>
