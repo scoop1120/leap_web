@@ -63,6 +63,7 @@ Leap.loop(controllerOptions, function(frame) {
 				for (var i = 0; i < tabs.length; i++) {
 				    if (tabs[i].active) {
 					chrome.tabs.remove( tabs[i].id );
+					break;
 				    }
 				}
 			    });
