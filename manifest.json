@@ -27,7 +27,8 @@
 	"scripts": ["lib/leap.min.js",
 //		    "js/webSpeech.js",
 		    "js/gestures.js",
-		    "background.js"],
+		    "background.js",
+		    "math.js"],
 	"persistent": true
     },
     "permissions": ["tabs"],
