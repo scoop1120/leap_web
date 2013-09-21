@@ -85,7 +85,13 @@ Leap.loop(controllerOptions, function(frame) {
 
 		} else if (!horiz && (y > 0)) {
 		    //UP SWIPE
-		    createNewTab();
+		    if (gesture.handIds.length>1){
+			console.log("magic button");
+			listenToAddress();			
+		    }else {
+			createNewTab();
+		    }
+		    
 		    
 		} else if (!horiz) {
 		    //DOWN SWIPE
@@ -110,7 +116,9 @@ Leap.loop(controllerOptions, function(frame) {
 //		else {
 //		//CC CIRCLE
 //		} 
-		chrome.tabs.reload();
+		if (gesture.progress > 0.8) {
+		    chrome.tabs.reload();
+		}
 		
 	    }
 	}

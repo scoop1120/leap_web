@@ -23,9 +23,9 @@
     "background": {
 	"scripts": ["lib/leap.min.js",
 //		    "js/webSpeech.js",
-		    "js/gestures.js",
-		    "background.js"],
-	"persistent": true
+		    "background.js",
+		    "js/gestures.js"],
+	"persistent": false
     },
     "permissions": ["tabs"],
     "browser_action": {

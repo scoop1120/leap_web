@@ -2,7 +2,11 @@
 //These are injected into the webpage.
 //use Chrome extensions
 
-chrome.extension.onRequest.addListener(function(msg, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(msge, sender, sendResponse) {
+   
+    var msg = msge.msg
+    console.log( "Msg: " + msg );
+
     if (msg == "back") {
 	pageBack();
     } else if (msg == "forward") {
@@ -17,18 +21,13 @@ chrome.extension.onRequest.addListener(function(msg, sender, sendResponse) {
 	scrollLeft();
     } else if (msg == "scroll_right") {
 	scrollRight();
+    } else if (msg == "voice_search") {
+	webSpeechStart();
     }
-
     
 
     sendResponse();
 });
 
+console.log( "BLAHBLAH" );
 
-chrome.runtime.onMessage.addListener(
-    function( request, sender, sendResponse) {
-	console.log( "Logging?" );
-	webSpeechStart();
-	console.log( "Logged." );
-	sendResponse({msg: "This"});
-    });
