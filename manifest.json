@@ -11,8 +11,10 @@
 	{
 	    "matches": ["<all_urls>"],
 	    "js": ["canvas_test.js",
-		   "contentscript.js",
-		   "js/page_nav.js"//,
+		   "js/webSpeech.js",
+		 //  "background.js",
+		   "js/page_nav.js",
+		    "contentscript.js"//,
 		  // "lib/leap.min.js",
 		  // "js/gestures.js"
 		  ]
@@ -20,7 +22,9 @@
     ],
     "background": {
 	"scripts": ["lib/leap.min.js",
-		    "js/gestures.js"],
+//		    "js/webSpeech.js",
+		    "js/gestures.js",
+		    "background.js"],
 	"persistent": true
     },
     "permissions": ["tabs"],

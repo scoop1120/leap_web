@@ -46,14 +46,8 @@ Leap.loop(controllerOptions, function(frame) {
 		        	//UP SWIPE
 		        	//WHO KNOWS WAT TO MAP THIS TO
 		            console.log("up swipe");
-			    chrome.tabs.getAllInWindow(null, function(tabs) {
-				for (var i = 0; i < tabs.length; i++) {
-				    if (tabs[i].active) {
-					
-					chrome.windows.create( {url: tabs[i].url} );
-					
-				    }
-				}
+			    chrome.runtime.sendMessage({command: "start_voice"}, function (res) {
+				console.log( res );
 			    });
 			    
 		        } else if (!horiz) {
@@ -84,7 +78,11 @@ Leap.loop(controllerOptions, function(frame) {
 //		    	else {
 //		    		//CC CIRCLE
 //		    	} 
-		        chrome.tabs.reload();
+		//		        chrome.tabs.reload();
+		chrome.runtime.sendMessage({command: "start_voice"}, function (res) {
+		    console.log( res );
+		});
+
 		
 	    	    
 	    }

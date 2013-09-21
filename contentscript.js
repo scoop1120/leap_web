@@ -19,8 +19,16 @@ chrome.extension.onRequest.addListener(function(msg, sender, sendResponse) {
 	scrollRight();
     }
 
-    alert( msg );
+    
 
     sendResponse();
 });
 
+
+chrome.runtime.onMessage.addListener(
+    function( request, sender, sendResponse) {
+	console.log( "Logging?" );
+	webSpeechStart();
+	console.log( "Logged." );
+	sendResponse({msg: "This"});
+    });
