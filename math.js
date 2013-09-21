@@ -3,7 +3,7 @@ var smooth_frames = 15;
 //ratio parameter
 ratio = 5.0;
 //mouse parameters for min and max
-var y_min = 75;
+var y_min = 100;
 var y_max = 240;
 var Left_x_min = -180;
 var Left_x_max = -30;
@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener(
     	left_contrib = vectorCoordScale(request.left_pos,Left_x_min,Left_x_max,y_min,y_max);
     	right_contrib = vectorCoordScale(request.right_pos,Right_x_min,Right_x_max,y_min,y_max);
     	//calculate total contribution with ratio 5:1
-    	total_contrib = [ratio/(1+ratio)*left_contrib[0] + 1/(1+ratio)*right_contrib[0], ratio/(1+ratio)*left_contrib[1] + 1/(1+r)*right_contrib[1]];
+    	total_contrib = [ratio/(1+ratio)*left_contrib[0] + 1/(1+ratio)*right_contrib[0], ratio/(1+ratio)*left_contrib[1] + 1/(1+ratio)*right_contrib[1]];
     	console.log("contrib point = (" + total_contrib[0] + ", " + total_contrib[1] + ")");
     	//shift array
     	for (var i = 0; i < smooth_frames - 1; i++) {
