@@ -26,6 +26,9 @@ var Right_x_min = 30;
 var Right_x_max = 180;
 
 
+//WEB WORKERS 
+var mathWorker = new Worker("math.js");
+
 
 $(window).resize(function(){
   window_width = $(window).width();
@@ -50,6 +53,10 @@ function vectorScale(vector, min, max, i){
     return (vector[i]-min)/(max-min);
   //}
 }
+
+myWorker.onmessage = function (oEvent) {
+  console.log("Called back by the worker!\n");
+};
 
 Leap.loop(controllerOptions, function(frame) {
 
