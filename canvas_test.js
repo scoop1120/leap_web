@@ -61,7 +61,7 @@ Leap.loop(controllerOptions, function(frame) {
     if ((1-mouse[1]) > .9)
       scrollDown(60*(1-mouse[1]));
 
-    if ((1-mouse[1]) < .1)))
+    if ((1-mouse[1]) < .1)
       scrollUp(60*(mouse[1]));
 
     if (mouse[0] < .1)
