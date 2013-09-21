@@ -15,6 +15,7 @@ var controllerOptions = {enableGestures: true};
 //initial mouse
 var mouse = [0.5,0.5];
 chrome.runtime.sendMessage({"type": "init_pos", "x": mouse[0], "y": mouse[1]});
+console.log(mouse[0]+mouse[1]);
 var mouse_color = "#0000ff";
 
 
