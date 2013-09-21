@@ -4,6 +4,7 @@
 function scrollDown(amount=50) {
 
     window.scrollBy(0,amount);
+    alert( 'Down' );
 
 }
 
@@ -25,5 +26,23 @@ function scrollLeft(amount=50) {
 function scrollRight(amount=50) {
 
     window.scrollBy(-amount,0);
+
+}
+
+function pageBack() {
+
+    history.go(-1);
+
+}
+
+function pageForward() {
+
+    history.go(1);
+
+}
+
+function pageRefresh() {
+
+    location.reload();
 
 }
