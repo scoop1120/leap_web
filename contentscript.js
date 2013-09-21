@@ -5,6 +5,7 @@
 chrome.runtime.onMessage.addListener(function(msge, sender, sendResponse) {
    
     var msg = msge.msg
+    var num = msge.numarg
     console.log( "Msg: " + msg );
 
     if (msg == "back") {
@@ -14,13 +15,13 @@ chrome.runtime.onMessage.addListener(function(msge, sender, sendResponse) {
     } else if (msg == "refresh") {
 	pageRefresh();
     } else if (msg == "scroll_up") {
-	scrollUp();
+	scrollUp(numarg);
     } else if (msg == "scroll_down") {
-	scrollDown();
+	scrollDown(numarg);
     } else if (msg == "scroll_left") {
-	scrollLeft();
+	scrollLeft(numarg);
     } else if (msg == "scroll_right") {
-	scrollRight();
+	scrollRight(numarg);
     } else if (msg == "voice_search") {
 	webSpeechStart();
     }
