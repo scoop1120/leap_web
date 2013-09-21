@@ -52,25 +52,18 @@ function vectorScale(vector, min, max, i){
 
 Leap.loop(controllerOptions, function(frame) {
 
-  var tit = document.getElementById("title");
-  var mouse_out = document.getElementById("mouse");
-  var left_out = document.getElementById("left");
-  var right_out = document.getElementById("right");
 
   var only_hand;
   var left_hand;
   var right_hand;
   //Output number of hands and assign hand vars
   if (frame.hands.length == 0){
-    tit.innerHTML= "No Hands";
     mouse_color = "#000000"; //black
   } else if (frame.hands.length == 1) {
-    tit.innerHTML = "One Hand";
     only_hand = frame.hands[0];
     mouse_color = "#0000ff"; //blue
   } else if (frame.hands.length == 2) {
     mouse_color = "#ff0000"; //red
-    tit.innerHTML = "Two Hands";
     if (frame.hands[0].palmPosition[0] < frame.hands[1].palmPosition[0]) {
       var left_num = 0;
     } else {
@@ -86,9 +79,13 @@ Leap.loop(controllerOptions, function(frame) {
     //use total_contrib to change mouse position
     mouse = total_contrib;
     //figure out if mouse is clicking
+    pointer_y = (1-mouse[1])*window_height;
+    pointer_x = mouse[0]*window_width;
+    //console.log(pointer_x+", "+pointer_y);
+
     if (right_hand.pointables.length == 1){
       mouse_color = "#00ff00"; //green
-      sim_click(mouse[0]*window_width, (1-mouse[1])*window_height);
+      sim_click(pointer_x, pointer_y);
     }
 
   } else {
@@ -117,8 +114,8 @@ function init() {
 
 
 function draw() {
-  var x = pointer_x-5;
-  var y = pointer_y+5;
+  var x = pointer_x;
+  var y = pointer_y;
   clear();
   $('#canvas').css({
     top : y,
@@ -136,23 +133,23 @@ function sim_click(x, y){
   var elem = document.elementFromPoint(x, y);
   $filtered = $(elem).find($('a')).filter( function (index){
    var offset = $(this).offset();
-   console.log(offset.top);
-   console.log(this);
+   //console.log(offset.top);
+   //console.log(this);
    if((offset.top < x+play  && offset.top >= x-play) && (offset.left < y+play && offset.left > x-play)){
-     console.log("index passed");
+     //console.log("index passed");
      return index;
    }
    else {
-    console.log('index not passed');
+    //console.log('index not passed');
     return;
    }
   });
   $filtered.eq(1);
-  console.log($filtered);
+  //console.log($filtered);
   var url;
   if(url = $filtered.context.href);
   else {
-    console.log("not found");
+    //console.log("not found");
     $filtered = $filtered.find($('a'));
     if($filtered.context.href){
       $filtered = $filtered.closest($('a'));
@@ -160,7 +157,7 @@ function sim_click(x, y){
     url = $filtered.context.href;
   }
 
-  console.log($filtered.context.href);
+  //console.log($filtered.context.href);
   if(url){
     window.location.href = ($filtered.context.href);
   }
