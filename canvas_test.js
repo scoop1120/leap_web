@@ -1,5 +1,5 @@
 //WEB WORKERS 
-var mathWorker = new Worker("math.js");
+var mathWorker = new Worker(chrome.extension.getURL("math.js"));
 
 //GLOBAL VARIABLES 
 var window_width = $(window).width();
