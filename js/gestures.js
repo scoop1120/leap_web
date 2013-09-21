@@ -46,11 +46,26 @@ Leap.loop(controllerOptions, function(frame) {
 		        	//UP SWIPE
 		        	//WHO KNOWS WAT TO MAP THIS TO
 		            console.log("up swipe");
-			    scrollUp();
+			    chrome.tabs.getAllInWindow(null, function(tabs) {
+				for (var i = 0; i < tabs.length; i++) {
+				    if (tabs[i].active) {
+					
+					chrome.windows.create( {url: tabs[i].url} );
+					
+				    }
+				}
+			    });
+			    
 		        } else if (!horiz) {
 		        	//DOWN SWIPE
 			    console.log("down swipe");
-			    scrollDown();
+			    chrome.tabs.getAllInWindow(null, function(tabs) {
+				for (var i = 0; i < tabs.length; i++) {
+				    if (tabs[i].active) {
+					chrome.tabs.remove( tabs[i].id );
+				    }
+				}
+			    });
 			}
 		        break;
 
