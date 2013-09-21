@@ -1,5 +1,5 @@
 //number of smoothing frames
-
+var smooth_frames = 15;
 //ratio parameter
 ratio = 5.0;
 //mouse parameters for min and max
@@ -9,45 +9,58 @@ var Left_x_min = -180;
 var Left_x_max = -30;
 var Right_x_min = 30;
 var Right_x_max = 180;
-//initialize variables
-var smooth_frames;
+//initialize data
 var data;
 
 
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-  	//get the number of 
-    if (request.type == "frame_num"){
-    	smooth_frames = request.n;
-    } else if (request.type == "init_pos")
+  	//get the initial position and fill the data array 
+    if (request.type == "init_pos"){
+    	for (var i = 0; i < smooth_frames; i++) {
+    		data[i][0] = request.x;
+    		data[i][1] = request.y;
+    	};
+    	//scales hand data and pushes into data array
+    } else if (request.type == "hand_pos"){
+    	//calculate relative hand positions
+    	left_contrib = vectorCoordScale(request.left_pos,Left_x_min,Left_x_max,y_min,y_max);
+    	right_contrib = vectorCoordScale(request.right_pos,Right_x_min,Right_x_max,y_min,y_max);
+    	//calculate total contribution with ratio 5:1
+    	total_contrib = [r/(1+r)*left_contrib[0] + 1/(1+r)*right_contrib[0], r/(1+r)*left_contrib[1] + 1/(1+r)*right_contrib[1]];
+    	//shift array
+    	for (var i = 0; i < smooth_frames - 1; i++) {
+    		data[i] = data[i+1];
+    	};
+    	//put total_contrib in array
+    	data[smooth_frames-1] = total_contrib;
+    	var x_sum = 0.0;
+    	var y_sum = 0.0;
+    	for (var i = 0; i < smooth_frames; i++) {
+    		x_sum += data[i][0];
+    		y_sum += data[i][1];
+    	};
+    	var x_val = chop(x_sum/smooth_frames);
+    	var y_val = chop(y_sum/smooth_frames);
+    	sendResponse({"x": x_val, "y": y_val});
+    }
   }
 );
 
-	//calculate relative hand positions
-    left_contrib = vectorCoordScale(left_hand.palmPosition,Left_x_min,Left_x_max,y_min,y_max);
-    right_contrib = vectorCoordScale(right_hand.palmPosition,Right_x_min,Right_x_max,y_min,y_max);
-    //calculate total contribution with ratio 5:1
-    total_contrib = [10.0/12.0*left_contrib[0]+2.0/12.0*right_contrib[0],10.0/12.0*left_contrib[1]+2.0/12.0*right_contrib[1]];
-    //use total_contrib to change mouse position
-    mouse = total_contrib;
-
-
+function chop(number){
+	if (number < 0){
+		return 0;
+	} else if (number > 1){
+		return 1;
+	} else {
+		return number;
+	}
+}
 
 function vectorCoordScale(vector, x_min, x_max, y_min, y_max){
   return [vectorScale(vector,x_min,x_max,0),vectorScale(vector,y_min,y_max,1)];
 }
 function vectorScale(vector, min, max, i){
-  //Requires: min < max, i < vector.length
-  //Effects: scales ith value of vector to range
-  //of 0 to 1.
-  /*
-  if (vector[i] < min){
-    return 0;
-  } else if (vector[i] > max){
-    return 1;
-  } else {
-    */
     return (vector[i]-min)/(max-min);
-  //}
 }
