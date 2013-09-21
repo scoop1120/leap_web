@@ -8,7 +8,7 @@ function processToURL( text ) {
     }
     var result = "";
     if (!((text.substring(0,7)=="http://") or (text.substring(0,8)=="https://"))) {
-	result = "http://"
+	result = "http://";
     }
     return result + text;
     
