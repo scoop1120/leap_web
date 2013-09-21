@@ -15,6 +15,7 @@ var controllerOptions = {enableGestures: true};
 
 //initial mouse
 var mouse = [0.5,0.5];
+var mouse_color = "#0000ff";
 
 //mouse parameters
 var y_min = 75;
@@ -63,7 +64,7 @@ Leap.loop(controllerOptions, function(frame) {
     only_hand = frame.hands[0];
     mouse_color = "#0000ff"; //blue
   } else if (frame.hands.length == 2) {
-    mouse_color = "#ff0000"; //red
+    mouse_color = "#0000ff"; //red
     if (frame.hands[0].palmPosition[0] < frame.hands[1].palmPosition[0]) {
       var left_num = 0;
     } else {
@@ -121,8 +122,8 @@ function draw() {
     top : y,
     left : x
   });
-  ctx.fillStyle = "#0769AD";
-  ctx.fillStyle = "#0769AD";
+  ctx.fillStyle = mouse_color;
+  ctx.fillStyle = mouse_color;
   circle(30, 30, 300);
 
 }
