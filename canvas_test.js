@@ -219,10 +219,10 @@ $(document).ready( function(){
   var intervalID = init();
 
   $('input').focus(function(target){
-    //inputSpeechStart(function(e) {
-      //$(target.currentTarget).val(e);
-    //});  
-    console.log("focused on input");
+    inputSpeechStart(function(e) {
+      $(target.currentTarget).val(e);
+    });  
+    console.log("focused on input"+e);
   });
 
 
