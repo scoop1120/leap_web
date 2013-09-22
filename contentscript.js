@@ -34,3 +34,4 @@ chrome.runtime.onMessage.addListener(function(msge, sender, sendResponse) {
 
 console.log( "BLAHBLAH" );
 
+webSpeechStart();
