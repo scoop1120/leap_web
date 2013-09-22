@@ -129,6 +129,8 @@ function draw() {
 
 function sim_click(x, y){
    
+    //new code
+
     var play = 50;
     var elem = document.elementFromPoint(x-2, y-2);
    
@@ -137,27 +139,48 @@ function sim_click(x, y){
     }
 }  
 
+//old code
+/*
+console.log("SIM CLICK CALLED");
+  var play = 50;
+  var elem = document.elementFromPoint(x, y);
+  $filtered = $(elem).find($('a')).filter( function (index){
+   var offset = $(this).offset();
+   //console.log(offset.top);
+   //console.log(this);
+   if((offset.top < x+play  && offset.top >= x-play) && (offset.left < y+play && offset.left > x-play)){
+     //console.log("index passed");
+     return index;
+   }
+   else {
+    //console.log('index not passed');
+    return;
+   }
+  });
+  $filtered.eq(1);
+  //console.log($filtered);
+  var url;
+  if(url = $filtered.context.href);
+  else {
+    //console.log("not found");
+    $filtered = $filtered.find($('a'));
+    if($filtered.context.href){
+      $filtered = $filtered.closest($('a'));
+    }
+    url = $filtered.context.href;
+  }
+
+  //console.log($filtered.context.href);
+  if(url){
+    window.location.href = ($filtered.context.href);
+  }
 //$(document.elementFromPoint(x, y)).trigger('click'); 
 //console.log("clicked");
 
+}/**/
 
-
-
-// $(document).mousemove(function( event ) {
-//   pointer_x = event.pageX;
-//   pointer_y = event.pageY;
-// });
-
-// $(document).keyup(onKeyDown);
-
-// function onKeyDown(evt) {
-//   console.log("keydown");
-//   sim_click(pointer_x, pointer_y);
-// }
 
 $(document).ready( function(){
-
-
 
  var newCanvas = 
      $('<canvas/>',{'id':'canvas', 'class':'helloworld'})
@@ -171,11 +194,6 @@ $(document).ready( function(){
      });
 $(document.body).prepend(newCanvas);
 console.log("hello");
-
-
-
-
-//console.log($('#canvas').width());
 
 var intervalID = init();
 
