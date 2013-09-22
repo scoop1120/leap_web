@@ -59,8 +59,10 @@ Leap.loop(controllerOptions, function(frame) {
 
     //scroll functionality
     //scales with closeness to edge
-    if ((1-mouse[1]) > .9)
-      scrollDown(60*(1-mouse[1]));
+    if (mouse[1] < .1){
+      mouse_color = "#FF9355"  
+      scrollDown(60);
+    }
 
     if ((1-mouse[1]) < .1)
       scrollUp(60*(mouse[1]));

@@ -13,11 +13,10 @@
 	    "js": ["lib/jquery-2.0.3.js",
        "lib/leap.min.js",
         "canvas_test.js",
-		   "js/webCommands.js",
-		 //  "background.js",
-		   //"js/page_nav.js",
+		   "js/webSpeech.js",
+		    "js/page_nav.js",
+
 		    "contentscript.js"
-		  // "js/gestures.js"
 		  ]
 	}
     ],
