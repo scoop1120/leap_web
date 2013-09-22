@@ -114,8 +114,7 @@ Leap.loop(controllerOptions, function(frame) {
 				    //UP SWIPE
 						listenToAddress();					    
 						createNewTab();
-				    } 
-				    
+						    
 				    
 				    
 				} else if (!horiz) {
