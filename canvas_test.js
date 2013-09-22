@@ -213,9 +213,17 @@ $(document).ready( function(){
         left : pointer_x,
         'z-index' : 99999
      });
-$(document.body).prepend(newCanvas);
-console.log("hello");
+  $(document.body).prepend(newCanvas);
+  console.log("hello");
 
-var intervalID = init();
+  var intervalID = init();
+
+  $('input').focus(function(target){
+    //inputSpeechStart(function(e) {
+      //$(target.currentTarget).val(e);
+    //});  
+    console.log("focused on input");
+  });
+
 
 });
