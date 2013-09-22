@@ -73,15 +73,13 @@ function send_command( cmd, numarg ) {
 
 Leap.loop(controllerOptions, function(frame) {
     
-    //if there is a gesture 
+/*    //if there is a gesture 
     //Other events:
     var hx = frame.hands[0].sphereCenter[0];
     var yx = frame.hands[0].sphereCenter[1];
-<<<<<<< HEAD
-//    send_command( "log", "hx: " + hx + " hy: " + hy );
-=======
+
     send_command( "log",  hx );
->>>>>>> parent of 1adc6ae... Finialize merge
+
     if ((hx > 150) && (hy > 300)) {
 //	console.log( "Calling forward" );
 	send_command( "forward", 4 );
@@ -90,7 +88,7 @@ Leap.loop(controllerOptions, function(frame) {
 //	console.log( "Calling backward" );
 	send_command( "back", 4 );
     }
-    
+    */
     if ((frame.gestures.length > 0)){
 //	console.log( "Gesture!" );
 	if ((frame.timestamp - time_last_gesture) > 500000){
@@ -114,11 +112,10 @@ Leap.loop(controllerOptions, function(frame) {
 				    
 				} else if (!horiz && (y > 0)) {
 				    //UP SWIPE
-				    if (frame.pointers.length>3){
-					console.log("magic button");
-					listenToAddress();			
+				    if (frame.pointers.length > 8){
+						listenToAddress();			
 				    } else if (frame.pointers.length>1){
-					createNewTab();
+						createNewTab();
 				    } 
 				    
 				    
@@ -130,35 +127,6 @@ Leap.loop(controllerOptions, function(frame) {
 				    
 				}
 			break;
-			case: "keyTap":
-//				console.log("keyTap");
-				listenToAddress();			
-
-
-			break;
-		
-	    case "circle":
-		
-		var clockwise;
-		//		if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
-		//      		clockwise = true;
-//  		}
-		// 		else {
-//      	        clockwise = false;
-		//  		}
-		//		if (clockwise){
-//		//CLOCKWISE CIRCLE
-		//			chrome.tabs.reload();
-		//		}
-//		else {
-		//		//CC CIRCLE
-		//		} 
-//		if (gesture.progress > 0.8) {
-//		    chrome.tabs.reload();
-	    //}
-
-	    case "keyTap":
-		listenToAddress();
 		
 	    }
 	}
