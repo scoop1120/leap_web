@@ -33,7 +33,7 @@ function createNewTab() {
     
     chrome.tabs.create({active: true, url: 'http://www.google.com/'},
 		       function (tab) {
-			   chrome.tabs.sendMessage( tab.id, {msg: "voice_search", numarg: 0} );
+			   chrome.tabs.sendMessage( tab.openerTabId, {msg: "voice_search", numarg: 0} );
 		       });
     
 }
