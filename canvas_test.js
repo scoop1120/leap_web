@@ -41,7 +41,6 @@ Leap.loop(controllerOptions, function(frame) {
 	only_hand = frame.hands[0];
 	mouse_color = "#0000ff"; //blue
     } else if (frame.hands.length == 2) {
-	mouse_color = "#0000ff"; //red
 	if (frame.hands[0].palmPosition[0] < frame.hands[1].palmPosition[0]) {
 	    var left_num = 0;
 	} else {
@@ -84,13 +83,15 @@ Leap.loop(controllerOptions, function(frame) {
   	    setTimeout( function () { clickable = true; }, 500 );
   	    mouse_color = "#00ff00"; //green
   	    sim_click(pointer_x, pointer_y);
-        click_counter = 0;
+        click_counter = -30;
 	    }
       else {
         click_counter++;
       }
    }
    else {
+    mouse_color = "#0000ff"; //red
+
     click_counter = 0;
    }
 	
