@@ -98,33 +98,42 @@ Leap.loop(controllerOptions, function(frame) {
 	    console.log(gesture.type);
 	    switch (gesture.type){
 	    case "swipe":
-				var x = gesture.direction[0];
-				var y = gesture.direction[1];
-				
-				var horiz = (Math.abs(x) > Math.abs(y));
-				if ((horiz) && (x < 0)) {
-				    //LEFT SWIPE
-				    moveTabLeft();
-				    
-				} else if (horiz) {
-				    //RIGHT SWIPE
-				    moveTabRight();
-				    
-				} else if (!horiz && (y > 0)) {
-				    //UP SWIPE
-											    
-						createNewTab();
-						listenToAddress();    
-				    
-				    
-				} else if (!horiz) {
-				    //DOWN SWIPE
-				    
-				    removeActiveTab();
-				    
-				}
-			break;
-		
+			var x = gesture.direction[0];
+			var y = gesture.direction[1];
+			
+			var horiz = (Math.abs(x) > Math.abs(y));
+			if ((horiz) && (x < 0)) {
+			    //LEFT SWIPE
+			    moveTabLeft();
+			    
+			} else if (horiz) {
+			    //RIGHT SWIPE
+			    moveTabRight();
+			    
+			} else if (!horiz && (y > 0)) {
+			    //UP SWIPE
+										    
+					createNewTab();
+					listenToAddress();    
+			    
+			    
+			} else if (!horiz) {
+			    //DOWN SWIPE
+			    
+			    removeActiveTab();
+			    
+			}
+		break;
+		case "screenTap":
+			var x = gesture.position[0];
+			if (x < -30){
+				console.log("back");
+				history.go(-1);
+			} else if (x > 30) {
+				history.go(1);
+			}
+
+		break;
 	    }
 	}
     }

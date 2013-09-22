@@ -9,6 +9,8 @@ var previousFrame = null;
 var paused = false;
 var pauseOnGesture = false;
 
+var click_counter = 0;
+
 // Setup Leap loop with frame callback function
 var controllerOptions = {enableGestures: true};
 
@@ -59,29 +61,37 @@ Leap.loop(controllerOptions, function(frame) {
 	pointer_x = mouse[0]*window_width;
 	
     var scrollConstant = 40;
-    var diff = 10;
+    var diff = 1/(.15);
 	//scroll functionality
 	//scales with closeness to edge
-	if ((1-mouse[1]) > .9)
+	if ((1-mouse[1]) > .85)
 	    scrollDown(scrollConstant*(1-diff*mouse[1]));
 	
-	if ((1-mouse[1]) < .1)
-	    scrollUp(scrollConstant*(mouse[1]));
+	if ((1-mouse[1]) < .15)
+	    scrollUp(scrollConstant*(diff*mouse[1]) + 1 - diff);
 	
-	if (mouse[0] < .1)
-	    scrollLeft(scrollConstant*(1-mouse[0]));
+	if (mouse[0] < .15)
+	    scrollLeft(scrollConstant*(1-diff*mouse[0]));
 	
-	if (mouse[0] > .9)
-	    scrollRight(scrollConstant*mouse[0]);    
+	if (mouse[0] > .85)
+	    scrollRight(scrollConstant*(diff*mouse[0]) + 1 - diff);  
 	//console.log(pointer_x+", "+pointer_y);
 	
 	if ((right_hand.pointables.length == 1) 
 	    && clickable){
-	    clickable = false;
-	    setTimeout( function () { clickable = true; }, 500 );
-	    mouse_color = "#00ff00"; //green
-	    sim_click(pointer_x, pointer_y);
-	}
+      if(click_counter > 5){
+  	    clickable = false;
+  	    setTimeout( function () { clickable = true; }, 500 );
+  	    mouse_color = "#00ff00"; //green
+  	    sim_click(pointer_x, pointer_y);
+	    }
+      else {
+        click_counter++;
+      }
+   }
+   else {
+    click_counter = 0;
+   }
 	
     } else {
     }
@@ -96,9 +106,9 @@ function rect(x,y,w,h) {
 }
 
 
-function circle(x,y,r) {
+function circle(x,y,r,a) {
     ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI*2, true);
+    ctx.arc(x, y, r, 0, Math.PI*a, true);
     ctx.fill();
 }
 
@@ -123,8 +133,9 @@ function draw() {
     });
     ctx.fillStyle = mouse_color;
     ctx.fillStyle = mouse_color;
-    circle(30, 30, 300);
-    
+    circle(5, 0, 100, 1);
+    rect(5,0, 100, 150);
+
 }
 
 
@@ -144,6 +155,11 @@ function sim_click(x, y){
 //old code
 
 console.log("SIM CLICK CALLED");
+
+  var click_at = document.elementFromPoint(x+7,y-3);
+  $(click_at).click();
+
+  /*
   var play = 50;
   var elem = document.elementFromPoint(x, y);
   $filtered = $(elem).find($('a')).filter( function (index){
@@ -178,6 +194,7 @@ console.log("SIM CLICK CALLED");
   }
 //$(document.elementFromPoint(x, y)).trigger('click'); 
 //console.log("clicked");
+*/
 
 }/**/
 
