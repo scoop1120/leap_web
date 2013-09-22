@@ -1,8 +1,6 @@
-leap_web
-========
 Conduct: The Touchless Chrome Interface
+========
 
-**Warning!** _Top Secret_
 
 Basic Guide to one-hand Gestures:
 **Swipe up:** Create new tab and enable voice
