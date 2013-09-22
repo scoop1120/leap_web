@@ -6,7 +6,7 @@ function processToURL( text ) {
     if (text.substring(0,3)=="www.") {
       prepend = "http://";
     } else {
-      prepend = "htt://www."
+      prepend = "http://www."
     }
     return prepend + text;
 }
@@ -28,28 +28,29 @@ function webSpeechStart (g){
     //recognition.interimResults = true;
     
     recognition.start();
+    console.log( "Started listening" );
     listening = true;
-
+    
     recognition.onresult = function(e){
-  var interim = "";
-  if (e.results.length){
-    for (var i = event.resultIndex; i < event.results.length; i++) {
-      interim = event.results[i][0].transcript;
-    };
-  }
-  if (interim.substring(0,10) == "navigate me to" || interim.substring(0,10) == "Navigate me to" ){
-    processed = processToURL(interim.substring(11, interim.length) );
-    console.log("navigate to "+ processed);
-    window.location = processed;
-  }
-  if (interim.substring(0,5) = "google" ){
-    processed = google( interim.substring(6,interim.length));
-    console.log("google " + processed);
-    window.location = processed;
-  }
-  console.log( "Interpreted " + interim + " to " + processToURL( interim ) );
-  
-  
+	var interim = "";
+	if (e.results.length){
+	    for (var i = event.resultIndex; i < event.results.length; i++) {
+		interim = event.results[i][0].transcript;
+	    };
+	}
+	if (interim.substring(0,10) == "navigate me to" || interim.substring(0,10) == "Navigate me to" ){
+	    processed = processToURL(interim.substring(11, interim.length) );
+	    console.log("navigate to "+ processed);
+	    window.location = processed;
+	}
+	if (interim.substring(0,5) = "google" ){
+	    processed = google( interim.substring(6,interim.length));
+	    console.log("google " + processed);
+	    window.location = processed;
+	}
+	console.log( "Interpreted " + interim + " to " + processToURL( interim ) );
+	
+	
     }
 }
 

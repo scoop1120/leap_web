@@ -131,7 +131,7 @@ function draw() {
 
 function sim_click(x, y){
    
-//*    //new code
+/*    //new code
 
     var play = 50;
     var elem = document.elementFromPoint(x-2, y-2);
