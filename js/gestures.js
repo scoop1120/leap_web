@@ -96,36 +96,42 @@ Leap.loop(controllerOptions, function(frame) {
 	    console.log(gesture.type);
 	    switch (gesture.type){
 	    case "swipe":
-		var x = gesture.direction[0];
-		var y = gesture.direction[1];
-		
-		var horiz = (Math.abs(x) > Math.abs(y));
-		if ((horiz) && (x < 0)) {
-		    //LEFT SWIPE
-		    moveTabLeft();
-		    
-		} else if (horiz) {
-		    //RIGHT SWIPE
-		    moveTabRight();
-		    
-		} else if (!horiz && (y > 0)) {
-		    //UP SWIPE
-		    if (frame.pointers.length>3){
-			console.log("magic button");
-			listenToAddress();			
-		    } else if (frame.pointers.length>1){
-			createNewTab();
-		    } 
-		    
-		    
-		    
-		} else if (!horiz) {
-		    //DOWN SWIPE
-		    
-		    removeActiveTab();
-		    
-		}
-		break;
+				var x = gesture.direction[0];
+				var y = gesture.direction[1];
+				
+				var horiz = (Math.abs(x) > Math.abs(y));
+				if ((horiz) && (x < 0)) {
+				    //LEFT SWIPE
+				    moveTabLeft();
+				    
+				} else if (horiz) {
+				    //RIGHT SWIPE
+				    moveTabRight();
+				    
+				} else if (!horiz && (y > 0)) {
+				    //UP SWIPE
+				    if (frame.pointers.length>3){
+					console.log("magic button");
+					listenToAddress();			
+				    } else if (frame.pointers.length>1){
+					createNewTab();
+				    } 
+				    
+				    
+				    
+				} else if (!horiz) {
+				    //DOWN SWIPE
+				    
+				    removeActiveTab();
+				    
+				}
+			break;
+			case: "keyTap":
+				console.log("keyTap");
+				listenToAddress();			
+
+
+			break;
 		
 	    case "circle":
 		

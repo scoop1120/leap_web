@@ -14,10 +14,10 @@
        "lib/leap.min.js",
         "canvas_test.js",
 		   "js/webSpeech.js",
-		 //  "background.js",
-		   "js/page_nav.js",
+
+		    "js/page_nav.js",
+
 		    "contentscript.js"
-		  // "js/gestures.js"
 		  ]
 	}
     ],
