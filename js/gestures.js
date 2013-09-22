@@ -112,9 +112,7 @@ Leap.loop(controllerOptions, function(frame) {
 				    
 				} else if (!horiz && (y > 0)) {
 				    //UP SWIPE
-				    if (frame.pointers.length > 8){
-						listenToAddress();			
-				    } else if (frame.pointers.length>1){
+						listenToAddress();					    
 						createNewTab();
 				    } 
 				    
