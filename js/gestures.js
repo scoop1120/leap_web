@@ -115,13 +115,14 @@ Leap.loop(controllerOptions, function(frame) {
 					listenToAddress();    
 			    
 			    
-			} else if (y < -0.7) {
+			} else if (y < -0.8) {
 			    //DOWN SWIPE
 			    removeActiveTab();
 			    
 			}
 		break;
 		case "screenTap":
+      console.log("screen tapped");
 			var x = gesture.position[0];
 			if (x < -30){
 				
