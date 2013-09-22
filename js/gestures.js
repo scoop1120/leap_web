@@ -31,7 +31,10 @@ function moveTabRight() {
 
 function createNewTab() {
     
-    chrome.tabs.create({active: true, url: 'http://www.google.com/'});
+    chrome.tabs.create({active: true, url: 'http://www.google.com/'},
+		       function (tab) {
+			   listenToAddress();
+		       });
     
 }
 
@@ -114,7 +117,7 @@ Leap.loop(controllerOptions, function(frame) {
 			    //UP SWIPE
 										    
 					createNewTab();
-					listenToAddress();    
+					    
 			    
 			    
 			} else if (!horiz) {
