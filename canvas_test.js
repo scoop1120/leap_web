@@ -67,13 +67,13 @@ Leap.loop(controllerOptions, function(frame) {
 	    scrollDown(scrollConstant*(1-diff*mouse[1]));
 	
 	if ((1-mouse[1]) < .15)
-	    scrollUp(scrollConstant*(diff*mouse[1]) + 1 - diff);
+	    scrollUp(scrollConstant*((diff*mouse[1]) + 1 - diff));
 	
 	if (mouse[0] < .15)
 	    scrollLeft(scrollConstant*(1-diff*mouse[0]));
 	
 	if (mouse[0] > .85)
-	    scrollRight(scrollConstant*(diff*mouse[0]) + 1 - diff);  
+	    scrollRight(scrollConstant*((diff*mouse[0]) + 1 - diff));  
 	//console.log(pointer_x+", "+pointer_y);
 	
 	if ((right_hand.pointables.length == 1) 
