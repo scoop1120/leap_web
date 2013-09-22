@@ -58,19 +58,20 @@ Leap.loop(controllerOptions, function(frame) {
 	pointer_y = (1-mouse[1])*window_height;
 	pointer_x = mouse[0]*window_width;
 	
+    var scrollConstant = 40;
 	//scroll functionality
 	//scales with closeness to edge
 	if ((1-mouse[1]) > .9)
-	    scrollDown(60*(1-mouse[1]));
+	    scrollDown(scrollConstant*(1-mouse[1]));
 	
 	if ((1-mouse[1]) < .1)
-	    scrollUp(60*(mouse[1]));
+	    scrollUp(scrollConstant*(mouse[1]));
 	
 	if (mouse[0] < .1)
-	    scrollLeft(60*(1-mouse[0]));
+	    scrollLeft(scrollConstant*(1-mouse[0]));
 	
 	if (mouse[0] > .9)
-	    scrollRight(60*mouse[0]);    
+	    scrollRight(scrollConstant*mouse[0]);    
 	//console.log(pointer_x+", "+pointer_y);
 	
 	if ((right_hand.pointables.length == 1) 
