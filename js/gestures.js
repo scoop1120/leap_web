@@ -77,7 +77,11 @@ Leap.loop(controllerOptions, function(frame) {
     //Other events:
     var hx = frame.hands[0].sphereCenter[0];
     var yx = frame.hands[0].sphereCenter[1];
+<<<<<<< HEAD
 //    send_command( "log", "hx: " + hx + " hy: " + hy );
+=======
+    send_command( "log",  hx );
+>>>>>>> parent of 1adc6ae... Finialize merge
     if ((hx > 150) && (hy > 300)) {
 //	console.log( "Calling forward" );
 	send_command( "forward", 4 );
