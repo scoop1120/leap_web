@@ -57,9 +57,11 @@ mathWorker.onmessage = function (oEvent) {
   console.log(oEvent.x + ", " + oEvent.y);
 };
 
+
+
 Leap.loop(controllerOptions, function(frame) {
 
-
+    var clickable = true;
   var only_hand;
   var left_hand;
   var right_hand;
@@ -90,9 +92,12 @@ Leap.loop(controllerOptions, function(frame) {
     pointer_x = mouse[0]*window_width;
     //console.log(pointer_x+", "+pointer_y);
 
-    if ((right_hand.pointables.length == 1) and (clickable)){
-      mouse_color = "#00ff00"; //green
-      sim_click(pointer_x, pointer_y);
+    if ((right_hand.pointables.length == 1) 
+	&& clickable){
+	clickable = false;
+	setTimeout( function () { clickable = true; }, 500 );
+	mouse_color = "#00ff00"; //green
+	sim_click(pointer_x, pointer_y);
     }
 
   } else {
@@ -133,16 +138,13 @@ function draw() {
 
 }
 
-var clickable = true;
+
 
 function sim_click(x, y){
-    console.log("SIM CLICK CALLED");
-    if (!clickable) return;
-    clickable = false;
-    setTimeout( function () { clickable = true; }, 500 );
+   
     var play = 50;
     var elem = document.elementFromPoint(x-2, y-2);
-    console.log( "ELEM: " + elem );
+   
     if (elem != null) {
 	elem.click();
     }
