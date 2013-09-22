@@ -128,9 +128,9 @@ Leap.loop(controllerOptions, function(frame) {
 			var x = gesture.position[0];
 			if (x < -30){
 				console.log("back");
-				pageBack();
+				history.go(-1);
 			} else if (x > 30) {
-				pageForward();
+				history.go(1);
 			}
 
 		break;
