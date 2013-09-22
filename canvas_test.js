@@ -59,10 +59,11 @@ Leap.loop(controllerOptions, function(frame) {
 	pointer_x = mouse[0]*window_width;
 	
     var scrollConstant = 40;
+    var diff = 5;
 	//scroll functionality
 	//scales with closeness to edge
 	if ((1-mouse[1]) > .9)
-	    scrollDown(scrollConstant*(1-mouse[1]));
+	    scrollDown(scrollConstant*(1-diff*mouse[1]));
 	
 	if ((1-mouse[1]) < .1)
 	    scrollUp(scrollConstant*(mouse[1]));
