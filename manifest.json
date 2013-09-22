@@ -30,6 +30,6 @@
 		    "math.js"],
 	"persistent": true
     },
-    "permissions": ["tabs"],
+    "permissions": ["tabs"]
 
 }

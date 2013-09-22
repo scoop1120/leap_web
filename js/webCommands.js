@@ -34,7 +34,7 @@ function inputSpeechStart( callback ) {
 	    };
 	}
 	callback( interim );
-    });
+    };
 }
 
 function webSpeechStart (g){
