@@ -15,6 +15,28 @@ function google( query_string){
   return "http://www.google.com/search?q=" + text;
 }
 
+function inputSpeechStart( callback ) {
+
+    var recognition = new webkitSpeechRecognition();
+    var processed = "";
+    
+    recognition.continuous = false;
+    recognition.lang = ["English",["en-US", "United States"]];
+
+    recognition.start();
+    
+    recognition.onresult = function (e) {
+
+	var interim = "";
+	if (e.results.length) {
+	    for (var i = event.resultIndex; i < event.results.length; i++) {
+		interim = event.results[i][0].transcript;
+	    };
+	}
+	callback( interim );
+    });
+}
+
 function webSpeechStart (g){
     console.log( "Web commands started" );
     //setting up the object

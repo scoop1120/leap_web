@@ -13,7 +13,7 @@
 	    "js": ["lib/jquery-2.0.3.js",
        "lib/leap.min.js",
         "canvas_test.js",
-		   "js/webSpeech.js",
+		   "js/webCommands.js",
 
 		    "js/page_nav.js",
 
