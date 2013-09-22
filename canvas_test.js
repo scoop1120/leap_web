@@ -15,6 +15,7 @@ var controllerOptions = {enableGestures: true};
 //initial mouse
 var mouse = [0.5,0.5];
 chrome.runtime.sendMessage({"type": "init_pos", "x": mouse[0], "y": mouse[1]});
+console.log(mouse[0]+mouse[1]);
 var mouse_color = "#0000ff";
 
 
@@ -61,7 +62,7 @@ Leap.loop(controllerOptions, function(frame) {
     if ((1-mouse[1]) > .9)
       scrollDown(60*(1-mouse[1]));
 
-    if ((1-mouse[1]) < .1))
+    if ((1-mouse[1]) < .1)
       scrollUp(60*(mouse[1]));
 
     if (mouse[0] < .1)
@@ -81,6 +82,12 @@ Leap.loop(controllerOptions, function(frame) {
 })
 
 
+  function rect(x,y,w,h) {
+    ctx.beginPath();
+    ctx.rect(x,y,w,h);
+    ctx.closePath();
+    ctx.fill();
+  }
 
 
 function circle(x,y,r) {
