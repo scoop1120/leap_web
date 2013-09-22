@@ -100,26 +100,23 @@ Leap.loop(controllerOptions, function(frame) {
 	    case "swipe":
 			var x = gesture.direction[0];
 			var y = gesture.direction[1];
-			
-			var horiz = (Math.abs(x) > Math.abs(y));
-			if ((horiz) && (x < 0)) {
+			if (x < -0.7) {
 			    //LEFT SWIPE
 			    moveTabLeft();
 			    
-			} else if (horiz) {
+			} else if (x > 0.7) {
 			    //RIGHT SWIPE
 			    moveTabRight();
 			    
-			} else if (!horiz && (y > 0)) {
+			} else if (y > 0.7) {
 			    //UP SWIPE
 										    
 					createNewTab();
 					listenToAddress();    
 			    
 			    
-			} else if (!horiz) {
+			} else if (y < -0.7) {
 			    //DOWN SWIPE
-			    
 			    removeActiveTab();
 			    
 			}
