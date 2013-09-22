@@ -55,19 +55,19 @@ function scrollCommand( direction, amount ) {
 
 function listenToAddress() {
     
-    send_command( "voice_search", 0 );
+    //send_command( "voice_search", 0 );
     
 }
 
 function send_command( cmd, numarg ) {
     
-    chrome.tabs.getAllInWindow( null, function( tabs ) {
-	for (var i = 0; i < tabs.length; i++) {
+  chrome.tabs.getAllInWindow( null, function( tabs ) {
+		for (var i = 0; i < tabs.length; i++) {
 	    if( tabs[i].active ) {
-		chrome.tabs.sendMessage( tabs[i].id, {msg: cmd, numarg: numarg} );
-	    }
-	}
-    });
+				chrome.tabs.sendMessage( tabs[i].id, {msg: cmd, numarg: numarg} );
+	   	}
+		}
+  });
 }
 
 
@@ -75,92 +75,85 @@ Leap.loop(controllerOptions, function(frame) {
     
     //if there is a gesture 
     //Other events:
-    var hx = frame.hands[0].sphereCenter[0];
-    var yx = frame.hands[0].sphereCenter[1];
-<<<<<<< HEAD
+    /* SPHERE STUFF
+    //var hx = frame.hands[0].sphereCenter[0];
+    //var hy = frame.hands[0].sphereCenter[1];
 //    send_command( "log", "hx: " + hx + " hy: " + hy );
-=======
-    send_command( "log",  hx );
->>>>>>> parent of 1adc6ae... Finialize merge
+
     if ((hx > 150) && (hy > 300)) {
 //	console.log( "Calling forward" );
-	send_command( "forward", 4 );
+			send_command( "forward", 4 );
     }
     if ((hx < -150) && (hy > 300)) {
 //	console.log( "Calling backward" );
-	send_command( "back", 4 );
+			send_command( "back", 4 );
     }
     
     if ((frame.gestures.length > 0)){
 //	console.log( "Gesture!" );
-	if ((frame.timestamp - time_last_gesture) > 500000){
-	    time_last_gesture = frame.timestamp;
-	    
-	    var gesture = frame.gestures[0];
-	    console.log(gesture.type);
-	    switch (gesture.type){
-	    case "swipe":
-				var x = gesture.direction[0];
-				var y = gesture.direction[1];
+			if ((frame.timestamp - time_last_gesture) > 500000){
+			    time_last_gesture = frame.timestamp;
+			    
+			    var gesture = frame.gestures[0];
+			    console.log(gesture.type);
+			    switch (gesture.type){
+			    case "swipe":
+						var x = gesture.direction[0];
+						var y = gesture.direction[1];
+						
+						var horiz = (Math.abs(x) > Math.abs(y));
+						if ((horiz) && (x < 0)) {
+						    //LEFT SWIPE
+						    moveTabLeft();
+						    
+						} else if (horiz) {
+						    //RIGHT SWIPE
+						    moveTabRight();
+						    
+						} else if (!horiz && (y > 0)) {
+						    //UP SWIPE
+						  if (frame.pointers && frame.pointers.length>3){
+							console.log("magic button");
+							listenToAddress();			
+						    } else if (frame.pointers.length>1){
+							createNewTab();
+						    } 
+						    
+						    
+						    
+						} else if (!horiz) {
+						    //DOWN SWIPE
+						    
+						    removeActiveTab();
+						    
+						}
+					break;
+			    case "circle":
 				
-				var horiz = (Math.abs(x) > Math.abs(y));
-				if ((horiz) && (x < 0)) {
-				    //LEFT SWIPE
-				    moveTabLeft();
-				    
-				} else if (horiz) {
-				    //RIGHT SWIPE
-				    moveTabRight();
-				    
-				} else if (!horiz && (y > 0)) {
-				    //UP SWIPE
-				    if (frame.pointers.length>3){
-					console.log("magic button");
-					listenToAddress();			
-				    } else if (frame.pointers.length>1){
-					createNewTab();
-				    } 
-				    
-				    
-				    
-				} else if (!horiz) {
-				    //DOWN SWIPE
-				    
-				    removeActiveTab();
-				    
-				}
-			break;
-			case: "keyTap":
-//				console.log("keyTap");
-				listenToAddress();			
-
-
-			break;
-		
-	    case "circle":
-		
-		var clockwise;
-		//		if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
-		//      		clockwise = true;
-//  		}
-		// 		else {
-//      	        clockwise = false;
+				var clockwise;
+				//		if (gesture.pointable.direction.angleTo(gesture.normal) <= PI/4) {
+				//      		clockwise = true;
 		//  		}
-		//		if (clockwise){
-//		//CLOCKWISE CIRCLE
-		//			chrome.tabs.reload();
-		//		}
-//		else {
-		//		//CC CIRCLE
-		//		} 
-//		if (gesture.progress > 0.8) {
-//		    chrome.tabs.reload();
-	    //}
+				// 		else {
+		//      	        clockwise = false;
+				//  		}
+				//		if (clockwise){
+		//		//CLOCKWISE CIRCLE
+				//			chrome.tabs.reload();
+				//		}
+		//		else {
+				//		//CC CIRCLE
+				//		} 
+		//		if (gesture.progress > 0.8) {
+		//		    chrome.tabs.reload();
+			    //}
 
-	    case "keyTap":
-		listenToAddress();
-		
-	    }
+			    case "keyTap":
+				 		listenToAddress();
+				
+			    }
+
 	}
     }
+    */
 });  

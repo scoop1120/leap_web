@@ -6,28 +6,19 @@
 
     "name": "leap_web",
     "description": "Basic gesture and voice control of Chrome with Leap Motion",
-    "version": "0.0.1",
-    "content_scripts": [
-	{
+    "version": "0.0.2",
+    "content_scripts": [{
 	    "matches": ["<all_urls>"],
 	    "js": ["lib/jquery-2.0.3.js",
-       "lib/leap.min.js",
-        "canvas_test.js",
-		   "js/webSpeech.js",
-
-		    "js/page_nav.js",
-
-		    "contentscript.js"
+       // "lib/leap.min.js",
+        "canvas_front.js"
 		  ]
-	}
-    ],
+	  }],
     "web_accessible_resources": ["lib/jquery-2.0.3.js","math.js"],
     "background": {
-	"scripts": ["lib/leap.min.js",
-//		    "js/webSpeech.js",
-		    "js/gestures.js",
-		    "background.js",
-		    "math.js"],
+	  "scripts": ["lib/leap.min.js",
+              "combine_loop.js",
+		          "math.js"],
 	"persistent": true
     },
     "permissions": ["tabs"],

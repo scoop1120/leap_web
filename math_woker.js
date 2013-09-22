@@ -12,8 +12,6 @@ var Right_x_max = 180;
 //initialize data
 var data = new Array();
 
-console.log("in math.js");
-
 function chop(number){
   if (number < 0){
     return 0;
@@ -45,10 +43,9 @@ function send_to_canvas(x, y){
 
 
 
-self.addEventListener('message', function(e) {
-  e = e.data;
-  console.log("message recieved");
+onmessage = function(e) {
   if (e.type == "init_pos"){
+    console.log("initial pos set");
     for (var i = 0; i < smooth_frames; i++) {
       data[i] = new Array();
       data[i][0] = e.x;
@@ -79,4 +76,4 @@ self.addEventListener('message', function(e) {
     var y_val = chop(y_sum/smooth_frames);
     send_to_canvas(x_val, y_val);
   }
-}, false);
+};
