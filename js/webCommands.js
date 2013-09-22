@@ -47,6 +47,9 @@ function webSpeechStart (g){
     console.log("google " + processed);
     window.location = processed;
   }
+  if (interim.substring(0,8) = "close tab"){
+    console.log("close tab");
+  }
   console.log( "Interpreted " + interim + " to " + processToURL( interim ) );
   
   
