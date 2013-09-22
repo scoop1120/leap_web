@@ -60,10 +60,8 @@ Leap.loop(controllerOptions, function(frame) {
 
     //scroll functionality
     //scales with closeness to edge
-    if (mouse[1] < .1){
-      mouse_color = "#FF9355"  
-      scrollDown(60);
-    }
+    if ((1-mouse[1]) > .9)
+      scrollDown(60*(1-mouse[1]));
 
     if ((1-mouse[1]) < .1)
       scrollUp(60*(mouse[1]));
@@ -109,7 +107,7 @@ function clear() {
 function init() {
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
-  return setInterval(draw, 100);
+  return setInterval(draw, 10);
 }
 
 

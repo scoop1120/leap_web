@@ -77,18 +77,18 @@ Leap.loop(controllerOptions, function(frame) {
     //Other events:
     var hx = frame.hands[0].sphereCenter[0];
     var yx = frame.hands[0].sphereCenter[1];
-    send_command( "log", "hx: " + hx + " hy: " + hy );
+//    send_command( "log", "hx: " + hx + " hy: " + hy );
     if ((hx > 150) && (hy > 300)) {
-	console.log( "Calling forward" );
+//	console.log( "Calling forward" );
 	send_command( "forward", 4 );
     }
     if ((hx < -150) && (hy > 300)) {
-	console.log( "Calling backward" );
+//	console.log( "Calling backward" );
 	send_command( "back", 4 );
     }
     
     if ((frame.gestures.length > 0)){
-	console.log( "Gesture!" );
+//	console.log( "Gesture!" );
 	if ((frame.timestamp - time_last_gesture) > 500000){
 	    time_last_gesture = frame.timestamp;
 	    
@@ -127,7 +127,7 @@ Leap.loop(controllerOptions, function(frame) {
 				}
 			break;
 			case: "keyTap":
-				console.log("keyTap");
+//				console.log("keyTap");
 				listenToAddress();			
 
 
