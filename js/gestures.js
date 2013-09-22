@@ -31,7 +31,7 @@ function moveTabRight() {
 
 function createNewTab() {
     
-    chrome.tabs.create({active: true, url: 'http://www.google.com/'});
+    chrome.tabs.create({active: true});
     
 }
 
