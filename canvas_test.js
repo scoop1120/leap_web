@@ -221,8 +221,9 @@ $(document).ready( function(){
   $('input').focus(function(target){
     inputSpeechStart(function(e) {
       $(target.currentTarget).val(e);
+      console.log("focused on input"+e);
+
     });  
-    console.log("focused on input"+e);
   });
 
 
