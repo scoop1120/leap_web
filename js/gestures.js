@@ -89,7 +89,7 @@ Leap.loop(controllerOptions, function(frame) {
 	send_command( "back", 4 );
     }
     */
-    if ((frame.gestures.length > 0)){
+    if ((frame.hands.length == 1) && (frame.gestures.length > 0)){
 //	console.log( "Gesture!" );
 	if ((frame.timestamp - time_last_gesture) > 500000){
 	    time_last_gesture = frame.timestamp;
