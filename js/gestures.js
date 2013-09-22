@@ -33,7 +33,7 @@ function createNewTab() {
     
     chrome.tabs.create({active: true, url: 'http://www.google.com/'},
 		       function (tab) {
-			   listenToAddress();
+			   chrome.tabs.sendMessage( tab.id, {msg: "voice_search", numarg: 0} );
 		       });
     
 }
@@ -103,25 +103,24 @@ Leap.loop(controllerOptions, function(frame) {
 	    case "swipe":
 			var x = gesture.direction[0];
 			var y = gesture.direction[1];
-      var limit = .35;
 			
 			var horiz = (Math.abs(x) > Math.abs(y));
-			if ((horiz) && (x < 0) && (Math.abs(x) > limit )) {
+			if ((horiz) && (x < 0)) {
 			    //LEFT SWIPE
 			    moveTabLeft();
 			    
-			} else if (horiz && (Math.abs(x) > limit)) {
+			} else if (horiz) {
 			    //RIGHT SWIPE
 			    moveTabRight();
 			    
-			} else if (!horiz && (y > 0) && (Math.abs(y) > limit)) {
+			} else if (!horiz && (y > 0)) {
 			    //UP SWIPE
 										    
 					createNewTab();
 					    
 			    
 			    
-			} else if (!horiz && (Math.abs(y) > limit)) {
+			} else if (!horiz) {
 			    //DOWN SWIPE
 			    
 			    removeActiveTab();
