@@ -25,9 +25,10 @@ $(window).resize(function(){
   window_height = $(window).height();
 });
 
+
 Leap.loop(controllerOptions, function(frame) {
 
-
+    var clickable = true;
   var only_hand;
   var left_hand;
   var right_hand;
@@ -72,9 +73,12 @@ Leap.loop(controllerOptions, function(frame) {
       scrollRight(60*mouse[0]);    
     //console.log(pointer_x+", "+pointer_y);
 
-    if (right_hand.pointables.length == 1){
-      mouse_color = "#00ff00"; //green
-      sim_click(pointer_x, pointer_y);
+    if ((right_hand.pointables.length == 1) 
+	&& clickable){
+	clickable = false;
+	setTimeout( function () { clickable = true; }, 500 );
+	mouse_color = "#00ff00"; //green
+	sim_click(pointer_x, pointer_y);
     }
 
   } else {
@@ -103,7 +107,7 @@ function clear() {
 function init() {
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
-  return setInterval(draw, 10);
+  return setInterval(draw, 100);
 }
 
 
@@ -121,44 +125,22 @@ function draw() {
 
 }
 
-function sim_click(x, y){
-  console.log("SIM CLICK CALLED");
-  var play = 50;
-  var elem = document.elementFromPoint(x, y);
-  $filtered = $(elem).find($('a')).filter( function (index){
-   var offset = $(this).offset();
-   //console.log(offset.top);
-   //console.log(this);
-   if((offset.top < x+play  && offset.top >= x-play) && (offset.left < y+play && offset.left > x-play)){
-     //console.log("index passed");
-     return index;
-   }
-   else {
-    //console.log('index not passed');
-    return;
-   }
-  });
-  $filtered.eq(1);
-  //console.log($filtered);
-  var url;
-  if(url = $filtered.context.href);
-  else {
-    //console.log("not found");
-    $filtered = $filtered.find($('a'));
-    if($filtered.context.href){
-      $filtered = $filtered.closest($('a'));
-    }
-    url = $filtered.context.href;
-  }
 
-  //console.log($filtered.context.href);
-  if(url){
-    window.location.href = ($filtered.context.href);
-  }
+
+function sim_click(x, y){
+   
+    var play = 50;
+    var elem = document.elementFromPoint(x-2, y-2);
+   
+    if (elem != null) {
+	elem.click();
+    }
+}  
+
 //$(document.elementFromPoint(x, y)).trigger('click'); 
 //console.log("clicked");
 
-}
+
 
 
 // $(document).mousemove(function( event ) {

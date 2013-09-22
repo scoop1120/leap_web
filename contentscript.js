@@ -24,6 +24,8 @@ chrome.runtime.onMessage.addListener(function(msge, sender, sendResponse) {
 	scrollRight(numarg);
     } else if (msg == "voice_search") {
 	webSpeechStart();
+    } else if (msg == "log") {
+	console.log( num );
     }
     
 
