@@ -31,10 +31,7 @@ function moveTabRight() {
 
 function createNewTab() {
     
-    chrome.tabs.create({active: true, url: 'http://www.google.com/'},
-		       function (tab) {
-			   chrome.tabs.sendMessage( tab.openerTabId, {msg: "voice_search", numarg: 0} );
-		       });
+    chrome.tabs.create({active: true, url: 'http://www.google.com/'});
     
 }
 
@@ -117,7 +114,7 @@ Leap.loop(controllerOptions, function(frame) {
 			    //UP SWIPE
 										    
 					createNewTab();
-					    
+					listenToAddress();    
 			    
 			    
 			} else if (!horiz) {
