@@ -127,6 +127,7 @@ Leap.loop(controllerOptions, function(frame) {
 		case "screenTap":
 			var x = gesture.position[0];
 			if (x < -30){
+				console.log("back");
 				pageBack();
 			} else if (x > 30) {
 				pageForward();
