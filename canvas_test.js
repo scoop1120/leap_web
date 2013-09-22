@@ -84,6 +84,7 @@ Leap.loop(controllerOptions, function(frame) {
   	    setTimeout( function () { clickable = true; }, 500 );
   	    mouse_color = "#00ff00"; //green
   	    sim_click(pointer_x, pointer_y);
+        click_counter = 0;
 	    }
       else {
         click_counter++;
