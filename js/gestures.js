@@ -126,7 +126,6 @@ Leap.loop(controllerOptions, function(frame) {
 				    
 				}
 			break;
-
 			case: "keyTap":
 //				console.log("keyTap");
 				listenToAddress();			
@@ -134,7 +133,6 @@ Leap.loop(controllerOptions, function(frame) {
 
 			break;
 		
-
 	    case "circle":
 		
 		var clockwise;
