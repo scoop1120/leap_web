@@ -1,9 +1,17 @@
 //webSpeech.js -- maybe???
 
+/*function createNewBookmark() {
 
+    chrome.tabs.getCurrent( function (curtab) {
+	
+	var partabid = curtab.openerTabId
+	chrome.bookmarks.create( {title:"title",
+				  url: 
+
+    );
+*/
 function processToURL( text ) {
 
-    console.log( text );
     var prepend = "";
     if (text.substring(0,3)=="www.") {
       prepend = "http://";
@@ -14,7 +22,29 @@ function processToURL( text ) {
 }
 
 function google( query_string){
-  return "http://www.google.com/search?q=" + query_string;
+  return "http://www.google.com/search?q=" + text;
+}
+
+function inputSpeechStart( callback ) {
+
+    var recognition = new webkitSpeechRecognition();
+    var processed = "";
+    
+    recognition.continuous = false;
+    recognition.lang = ["English",["en-US", "United States"]];
+
+    recognition.start();
+    
+    recognition.onresult = function (e) {
+
+	var interim = "";
+	if (e.results.length) {
+	    for (var i = event.resultIndex; i < event.results.length; i++) {
+		interim = event.results[i][0].transcript;
+	    };
+	}
+	callback( interim );
+    };
 }
 
 function webSpeechStart (g){
@@ -40,27 +70,17 @@ function webSpeechStart (g){
 		interim = event.results[i][0].transcript;
 	    };
 	}
-	console.log( "This one." );
-	if ((interim.substring(0,15) == "navigate me to") || (interim.substring(0,15) == "Navigate me to" )){
-	    var subs = interim.substring(15);
-	    console.log( subs );
-	    processed = processToURL(subs);
+	if (interim.substring(0,10) == "navigate me to" || interim.substring(0,10) == "Navigate me to" ){
+	    processed = processToURL(interim.substring(11, interim.length) );
 	    console.log("navigate to "+ processed);
-	  //  window.location = processed;
-	    return;
-
-	} else if (interim.substring(0,6) == "Google" ){
+	    window.location = processed;
+	}
+	if (interim.substring(0,5) = "google" ){
 	    processed = google( interim.substring(6,interim.length));
 	    console.log("google " + processed);
 	    window.location = processed;
-	    return;
-	} else if ((interim == "create new bookmark") || (interim == "Create new bookmark")) {
-	    create_new_bookmark();
-	    return;
 	}
-	proc = processToURL( interim );
-	console.log( "Interpreted " + interim + " to " + proc );
-	window.location = proc;
+	console.log( "Interpreted " + interim + " to " + processToURL( interim ) );
 	
 	
     }
