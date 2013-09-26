@@ -1,19 +1,11 @@
 //webSpeech.js -- maybe???
 
-/*function createNewBookmark() {
 
-    chrome.tabs.getCurrent( function (curtab) {
-	
-	var partabid = curtab.openerTabId
-	chrome.bookmarks.create( {title:"title",
-				  url: 
-
-    );
-*/
 function processToURL( text ) {
 
+    console.log( text );
     var prepend = "";
-    if (text.substring(0,3)=="www.") {
+    if (text.substring(0,4)=="www.") {
       prepend = "http://";
     } else {
       prepend = "http://www."
@@ -22,29 +14,7 @@ function processToURL( text ) {
 }
 
 function google( query_string){
-  return "http://www.google.com/search?q=" + text;
-}
-
-function inputSpeechStart( callback ) {
-
-    var recognition = new webkitSpeechRecognition();
-    var processed = "";
-    
-    recognition.continuous = false;
-    recognition.lang = ["English",["en-US", "United States"]];
-
-    recognition.start();
-    
-    recognition.onresult = function (e) {
-
-	var interim = "";
-	if (e.results.length) {
-	    for (var i = event.resultIndex; i < event.results.length; i++) {
-		interim = event.results[i][0].transcript;
-	    };
-	}
-	callback( interim );
-    };
+  return "http://www.google.com/search?q=" + query_string;
 }
 
 function webSpeechStart (g){
@@ -70,17 +40,40 @@ function webSpeechStart (g){
 		interim = event.results[i][0].transcript;
 	    };
 	}
-	if (interim.substring(0,10) == "navigate me to" || interim.substring(0,10) == "Navigate me to" ){
-	    processed = processToURL(interim.substring(11, interim.length) );
+	
+	if ((interim.substring(0,14) == "navigate me to") || (interim.substring(0,14) == "Navigate me to" )){
+	    var subs = interim.substring(15);
+	    console.log( subs );
+	    processed = processToURL(subs);
 	    console.log("navigate to "+ processed);
 	    window.location = processed;
-	}
-	if (interim.substring(0,5) = "google" ){
+	    return;
+	} else if ((interim.substring(0,11) == "navigate to") || (interim.substring(0,11) == "Navigate to" )) {
+	    var subs = interim.substring(12);
+	    processed = processToURL(subs);
+	    window.location.href = processed;
+	    return;
+	} else if (interim.substring(0,6) == "Google" ){
 	    processed = google( interim.substring(6,interim.length));
 	    console.log("google " + processed);
 	    window.location = processed;
+	    return;
+	} else if ((interim == "create new bookmark") || (interim == "Create new bookmark")) {
+	    create_new_bookmark();
+	    return;
+	} else if (interim.toLowerCase() == "sing me a song") {
+	    window.location = "http://www.youtube.com/watch?v=41U78QP8nBk";
+	    return;
+	} else if (interim.toLowerCase() == "play me a song") {
+	    window.location = "http://www.youtube.com/watch?v=ehpYg0NsGqA";
+	    return;
+	} else if (interim.toLowerCase() == "say something dirty") {
+	    speechSynthesis.speak(SpeechSynthesisUtterance('I want to see you naked and in the shower.'));
+	    return;
 	}
-	console.log( "Interpreted " + interim + " to " + processToURL( interim ) );
+	proc = processToURL( interim );
+	console.log( "Interpreted " + interim + " to " + proc );
+//	window.location = proc;
 	
 	
     }
